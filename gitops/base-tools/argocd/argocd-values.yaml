@@ -1,6 +1,7 @@
 configs:
   secret:
     argocdServerAdminPassword: "$2a$10$5vm8wXaSdbuff0m9l21JdevzXBzJFPCi8sy6OOnpZMAG.fOXL7jvO"
+    argocdServerAdminPasswordMtime: "2023-11-13T09:23:16Z"
 notifications:
   enabled: false
 dex:
