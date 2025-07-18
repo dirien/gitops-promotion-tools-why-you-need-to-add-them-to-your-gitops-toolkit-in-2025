@@ -1,0 +1,24 @@
+configs:
+  secret:
+    argocdServerAdminPassword: "$2a$10$5vm8wXaSdbuff0m9l21JdevzXBzJFPCi8sy6OOnpZMAG.fOXL7jvO"
+notifications:
+  enabled: false
+dex:
+  enabled: false
+
+server:
+  resources:
+    requests:
+      cpu: 500m
+      memory: 512Mi
+    limits:
+      cpu: 1000m
+      memory: 1024Mi
+  service:
+    type: LoadBalancer
+  extensions:
+    extensionList:
+    - name: rollout-extension
+      env:
+      - name: EXTENSION_URL
+        value: https://github.com/argoproj-labs/rollout-extension/releases/download/v0.3.7/extension.tar
