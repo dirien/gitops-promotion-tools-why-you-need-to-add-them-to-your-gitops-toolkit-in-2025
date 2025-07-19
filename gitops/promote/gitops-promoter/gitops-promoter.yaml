@@ -15,8 +15,6 @@ spec:
     kustomize:
       images:
       - "quay.io/argoprojlabs/gitops-promoter=quay.io/argoprojlabs/gitops-promoter:v0.10.2"
-    directory:
-      recurse: true
   syncPolicy:
     automated:
       prune: true
