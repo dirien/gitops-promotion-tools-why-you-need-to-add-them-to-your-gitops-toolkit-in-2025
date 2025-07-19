@@ -14,9 +14,7 @@ spec:
     path: dist
     kustomize:
       images:
-      - name: quay.io/argoprojlabs/gitops-promoter
-        newName: quay.io/argoprojlabs/gitops-promoter
-        newTag: v0.10.2
+      - "quay.io/argoprojlabs/gitops-promoter=quay.io/argoprojlabs/gitops-promoter:v0.10.2"
     directory:
       recurse: true
   syncPolicy:
