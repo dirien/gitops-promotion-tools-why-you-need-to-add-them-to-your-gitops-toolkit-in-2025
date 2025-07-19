@@ -12,6 +12,11 @@ spec:
     repoURL: https://github.com/argoproj-labs/gitops-promoter
     targetRevision: v0.10.2
     path: dist
+    kustomize:
+      images:
+      - name: quay.io/argoprojlabs/gitops-promoter
+        newName: quay.io/argoprojlabs/gitops-promoter
+        newTag: v0.10.2
     directory:
       recurse: true
   syncPolicy:
