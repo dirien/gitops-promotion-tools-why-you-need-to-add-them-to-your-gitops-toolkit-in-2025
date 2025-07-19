@@ -9,12 +9,9 @@ spec:
     server: https://kubernetes.default.svc
   project: infra
   source:
-    repoURL: https://github.com/argoproj-labs/gitops-promoter
-    targetRevision: v0.10.2
-    path: dist
-    kustomize:
-      images:
-      - "manager=quay.io/argoprojlabs/gitops-promoter:v0.10.2"
+    repoURL: https://github.com/dirien/gitops-promotion-tools-why-you-need-to-add-them-to-your-gitops-toolkit-in-2025
+    targetRevision: main
+    path: promoter/gitops-promoter/yaml
   syncPolicy:
     automated:
       prune: true
