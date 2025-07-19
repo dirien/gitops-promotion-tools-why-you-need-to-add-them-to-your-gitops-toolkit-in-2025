@@ -14,7 +14,7 @@ spec:
     path: dist
     kustomize:
       images:
-      - "quay.io/argoprojlabs/gitops-promoter=quay.io/argoprojlabs/gitops-promoter:v0.10.2"
+      - "manager=quay.io/argoprojlabs/gitops-promoter:v0.10.2"
   syncPolicy:
     automated:
       prune: true
