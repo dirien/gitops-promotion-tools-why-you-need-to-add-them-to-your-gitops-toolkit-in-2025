@@ -11,7 +11,7 @@ spec:
   source:
     repoURL: https://github.com/dirien/gitops-promotion-tools-why-you-need-to-add-them-to-your-gitops-toolkit-in-2025
     targetRevision: main
-    path: gitops/promote/gitops-promoter/yaml
+    path: gitops/promote-tools/gitops-promoter/yaml
     directory:
       recurse: true
   syncPolicy:
