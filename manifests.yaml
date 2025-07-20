@@ -1,0 +1,546 @@
+---
+# Source: podtato-head/templates/serviceaccount.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: podtato-head-app-prod
+  labels:
+    helm.sh/chart: podtato-head-0.2.7
+    app.kubernetes.io/name: podtato-head
+    app.kubernetes.io/instance: podtato-head-app-prod
+    app.kubernetes.io/version: "0.2.7"
+    app.kubernetes.io/managed-by: Helm
+imagePullSecrets:
+  - name: ghcr
+---
+# Source: podtato-head/templates/configmap-discovery.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: podtato-head-app-prod-service-discovery
+  labels:
+    helm.sh/chart: podtato-head-0.2.7
+    app.kubernetes.io/name: podtato-head
+    app.kubernetes.io/instance: podtato-head-app-prod
+    app.kubernetes.io/version: "0.2.7"
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/component: podtato-head-app-prod-service-discovery
+data:
+    servicesConfig.yaml: |
+        hat:       "http://podtato-head-app-prod-hat:9001"
+        left-leg:  "http://podtato-head-app-prod-left-leg:9002"
+        left-arm:  "http://podtato-head-app-prod-left-arm:9003"
+        right-leg: "http://podtato-head-app-prod-right-leg:9004"
+        right-arm: "http://podtato-head-app-prod-right-arm:9005"
+---
+# Source: podtato-head/templates/service-entry.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: podtato-head-app-prod-entry
+  labels:
+    helm.sh/chart: podtato-head-0.2.7
+    app.kubernetes.io/name: podtato-head
+    app.kubernetes.io/instance: podtato-head-app-prod
+    app.kubernetes.io/version: "0.2.7"
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/component: podtato-head-app-prod-entry
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 9000
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: podtato-head
+    app.kubernetes.io/instance: podtato-head-app-prod
+    app.kubernetes.io/component: podtato-head-app-prod-entry
+---
+# Source: podtato-head/templates/service-hat.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: podtato-head-app-prod-hat
+  labels:
+    helm.sh/chart: podtato-head-0.2.7
+    app.kubernetes.io/name: podtato-head
+    app.kubernetes.io/instance: podtato-head-app-prod
+    app.kubernetes.io/version: "0.2.7"
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/component: podtato-head-app-prod-hat
+spec:
+  type: ClusterIP
+  ports:
+    - port: 9001
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: podtato-head
+    app.kubernetes.io/instance: podtato-head-app-prod
+    app.kubernetes.io/component: podtato-head-app-prod-hat
+---
+# Source: podtato-head/templates/service-left-arm.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: podtato-head-app-prod-left-arm
+  labels:
+    helm.sh/chart: podtato-head-0.2.7
+    app.kubernetes.io/name: podtato-head
+    app.kubernetes.io/instance: podtato-head-app-prod
+    app.kubernetes.io/version: "0.2.7"
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/component: podtato-head-app-prod-left-arm
+spec:
+  type: ClusterIP
+  ports:
+    - port: 9003
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: podtato-head
+    app.kubernetes.io/instance: podtato-head-app-prod
+    app.kubernetes.io/component: podtato-head-app-prod-left-arm
+---
+# Source: podtato-head/templates/service-left-leg.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: podtato-head-app-prod-left-leg
+  labels:
+    helm.sh/chart: podtato-head-0.2.7
+    app.kubernetes.io/name: podtato-head
+    app.kubernetes.io/instance: podtato-head-app-prod
+    app.kubernetes.io/version: "0.2.7"
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/component: podtato-head-app-prod-left-leg
+spec:
+  type: ClusterIP
+  ports:
+    - port: 9002
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: podtato-head
+    app.kubernetes.io/instance: podtato-head-app-prod
+    app.kubernetes.io/component: podtato-head-app-prod-left-leg
+---
+# Source: podtato-head/templates/service-right-arm.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: podtato-head-app-prod-right-arm
+  labels:
+    helm.sh/chart: podtato-head-0.2.7
+    app.kubernetes.io/name: podtato-head
+    app.kubernetes.io/instance: podtato-head-app-prod
+    app.kubernetes.io/version: "0.2.7"
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/component: podtato-head-app-prod-right-arm
+spec:
+  type: ClusterIP
+  ports:
+    - port: 9005
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: podtato-head
+    app.kubernetes.io/instance: podtato-head-app-prod
+    app.kubernetes.io/component: podtato-head-app-prod-right-arm
+---
+# Source: podtato-head/templates/service-right-leg.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: podtato-head-app-prod-right-leg
+  labels:
+    helm.sh/chart: podtato-head-0.2.7
+    app.kubernetes.io/name: podtato-head
+    app.kubernetes.io/instance: podtato-head-app-prod
+    app.kubernetes.io/version: "0.2.7"
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/component: podtato-head-app-prod-right-leg
+spec:
+  type: ClusterIP
+  ports:
+    - port: 9004
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: podtato-head
+    app.kubernetes.io/instance: podtato-head-app-prod
+    app.kubernetes.io/component: podtato-head-app-prod-right-leg
+---
+# Source: podtato-head/templates/deployment-entry.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: podtato-head-app-prod-entry
+  labels:
+    helm.sh/chart: podtato-head-0.2.7
+    app.kubernetes.io/name: podtato-head
+    app.kubernetes.io/instance: podtato-head-app-prod
+    app.kubernetes.io/version: "0.2.7"
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/component: podtato-head-app-prod-entry
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: podtato-head
+      app.kubernetes.io/instance: podtato-head-app-prod
+      app.kubernetes.io/component: podtato-head-app-prod-entry
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: podtato-head
+        app.kubernetes.io/instance: podtato-head-app-prod
+        app.kubernetes.io/component: podtato-head-app-prod-entry
+    spec:
+      terminationGracePeriodSeconds: 5
+      serviceAccountName: podtato-head-app-prod
+      securityContext:
+        {}
+      containers:
+        - name: podtato-head-app-prod-entry
+          securityContext:
+            {}
+          image: "ghcr.io/podtato-head/entry:latest"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 9000
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          resources:
+            {}
+          volumeMounts:
+            - name: service-discovery-map
+              mountPath: /config
+          env:
+            - name: SERVICES_CONFIG_FILE_PATH
+              value: /config/servicesConfig.yaml
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+      volumes:
+        - name: service-discovery-map
+          configMap:
+              name: podtato-head-app-prod-service-discovery
+---
+# Source: podtato-head/templates/deployment-hat.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: podtato-head-app-prod-hat
+  labels:
+    helm.sh/chart: podtato-head-0.2.7
+    app.kubernetes.io/name: podtato-head
+    app.kubernetes.io/instance: podtato-head-app-prod
+    app.kubernetes.io/version: "0.2.7"
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/component: podtato-head-app-prod-hat
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: podtato-head
+      app.kubernetes.io/instance: podtato-head-app-prod
+      app.kubernetes.io/component: podtato-head-app-prod-hat
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: podtato-head
+        app.kubernetes.io/instance: podtato-head-app-prod
+        app.kubernetes.io/component: podtato-head-app-prod-hat
+    spec:
+      terminationGracePeriodSeconds: 5
+      serviceAccountName: podtato-head-app-prod
+      securityContext:
+        {}
+      containers:
+        - name: podtato-head-app-prod-hat
+          securityContext:
+            {}
+          image: "ghcr.io/podtato-head/hat:latest"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 9000
+              protocol: TCP
+          # livenessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: http
+          # readinessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: http
+          resources:
+            {}
+          env:
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: PODTATO_PART_NUMBER
+              value: "02"
+---
+# Source: podtato-head/templates/deployment-left-arm.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: podtato-head-app-prod-left-arm
+  labels:
+    helm.sh/chart: podtato-head-0.2.7
+    app.kubernetes.io/name: podtato-head
+    app.kubernetes.io/instance: podtato-head-app-prod
+    app.kubernetes.io/version: "0.2.7"
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/component: podtato-head-app-prod-left-arm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: podtato-head
+      app.kubernetes.io/instance: podtato-head-app-prod
+      app.kubernetes.io/component: podtato-head-app-prod-left-arm
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: podtato-head
+        app.kubernetes.io/instance: podtato-head-app-prod
+        app.kubernetes.io/component: podtato-head-app-prod-left-arm
+    spec:
+      terminationGracePeriodSeconds: 5
+      serviceAccountName: podtato-head-app-prod
+      securityContext:
+        {}
+      containers:
+        - name: podtato-head-app-prod-left-arm
+          securityContext:
+            {}
+          image: "ghcr.io/podtato-head/left-arm:latest"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 9000
+              protocol: TCP
+          # livenessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: http
+          # readinessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: http
+          resources:
+            {}
+          env:
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+---
+# Source: podtato-head/templates/deployment-left-leg.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: podtato-head-app-prod-left-leg
+  labels:
+    helm.sh/chart: podtato-head-0.2.7
+    app.kubernetes.io/name: podtato-head
+    app.kubernetes.io/instance: podtato-head-app-prod
+    app.kubernetes.io/version: "0.2.7"
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/component: podtato-head-app-prod-left-leg
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: podtato-head
+      app.kubernetes.io/instance: podtato-head-app-prod
+      app.kubernetes.io/component: podtato-head-app-prod-left-leg
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: podtato-head
+        app.kubernetes.io/instance: podtato-head-app-prod
+        app.kubernetes.io/component: podtato-head-app-prod-left-leg
+    spec:
+      terminationGracePeriodSeconds: 5
+      serviceAccountName: podtato-head-app-prod
+      securityContext:
+        {}
+      containers:
+        - name: podtato-head-app-prod-left-leg
+          securityContext:
+            {}
+          image: "ghcr.io/podtato-head/left-leg:latest"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 9000
+              protocol: TCP
+          # livenessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: http
+          # readinessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: http
+          resources:
+            {}
+          env:     
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+---
+# Source: podtato-head/templates/deployment-right-arm.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: podtato-head-app-prod-right-arm
+  labels:
+    helm.sh/chart: podtato-head-0.2.7
+    app.kubernetes.io/name: podtato-head
+    app.kubernetes.io/instance: podtato-head-app-prod
+    app.kubernetes.io/version: "0.2.7"
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/component: podtato-head-app-prod-right-arm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: podtato-head
+      app.kubernetes.io/instance: podtato-head-app-prod
+      app.kubernetes.io/component: podtato-head-app-prod-right-arm
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: podtato-head
+        app.kubernetes.io/instance: podtato-head-app-prod
+        app.kubernetes.io/component: podtato-head-app-prod-right-arm
+    spec:
+      terminationGracePeriodSeconds: 5
+      serviceAccountName: podtato-head-app-prod
+      securityContext:
+        {}
+      containers:
+        - name: podtato-head-app-prod-right-arm
+          securityContext:
+            {}
+          image: "ghcr.io/podtato-head/right-arm:latest"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 9000
+              protocol: TCP
+          # livenessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: http
+          # readinessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: http
+          resources:
+            {}
+          env:
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+---
+# Source: podtato-head/templates/deployment-right-leg.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: podtato-head-app-prod-right-leg
+  labels:
+    helm.sh/chart: podtato-head-0.2.7
+    app.kubernetes.io/name: podtato-head
+    app.kubernetes.io/instance: podtato-head-app-prod
+    app.kubernetes.io/version: "0.2.7"
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/component: podtato-head-app-prod-right-leg
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: podtato-head
+      app.kubernetes.io/instance: podtato-head-app-prod
+      app.kubernetes.io/component: podtato-head-app-prod-right-leg
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: podtato-head
+        app.kubernetes.io/instance: podtato-head-app-prod
+        app.kubernetes.io/component: podtato-head-app-prod-right-leg
+    spec:
+      terminationGracePeriodSeconds: 5
+      serviceAccountName: podtato-head-app-prod
+      securityContext:
+        {}
+      containers:
+        - name: podtato-head-app-prod-right-leg
+          securityContext:
+            {}
+          image: "ghcr.io/podtato-head/right-leg:latest"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 9000
+              protocol: TCP
+          # livenessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: http
+          # readinessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: http
+          resources:
+            {}
+          env:
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+---
+# Source: podtato-head/templates/tests/test-connection.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "podtato-head-app-prod-test-connection"
+  labels:
+    helm.sh/chart: podtato-head-0.2.7
+    app.kubernetes.io/name: podtato-head
+    app.kubernetes.io/instance: podtato-head-app-prod
+    app.kubernetes.io/version: "0.2.7"
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args: ['podtato-entry:9000']
+  restartPolicy: Never
