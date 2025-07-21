@@ -281,7 +281,7 @@ spec:
                 fieldRef:
                   fieldPath: metadata.name
             - name: PODTATO_PART_NUMBER
-              value: "02"
+              value: "01"
           image: ghcr.io/podtato-head/hat:latest
           imagePullPolicy: IfNotPresent
           name: podtato-head-app-gitops-promoter-prod-hat
