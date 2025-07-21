@@ -1,0 +1,503 @@
+apiVersion: v1
+imagePullSecrets:
+  - name: ghcr
+kind: ServiceAccount
+metadata:
+  annotations:
+    argocd.argoproj.io/tracking-id: podtato-head-app-gitops-promoter-prod:/ServiceAccount:/podtato-head-app-gitops-promoter-prod
+  labels:
+    app.kubernetes.io/instance: podtato-head-app-gitops-promoter-prod
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: podtato-head
+    app.kubernetes.io/version: 0.2.7
+    helm.sh/chart: podtato-head-0.2.7
+  name: podtato-head-app-gitops-promoter-prod
+---
+apiVersion: v1
+data:
+  servicesConfig.yaml: |
+    hat:       "http://podtato-head-app-gitops-promoter-prod-hat:9001"
+    left-leg:  "http://podtato-head-app-gitops-promoter-prod-left-leg:9002"
+    left-arm:  "http://podtato-head-app-gitops-promoter-prod-left-arm:9003"
+    right-leg: "http://podtato-head-app-gitops-promoter-prod-right-leg:9004"
+    right-arm: "http://podtato-head-app-gitops-promoter-prod-right-arm:9005"
+kind: ConfigMap
+metadata:
+  annotations:
+    argocd.argoproj.io/tracking-id: podtato-head-app-gitops-promoter-prod:/ConfigMap:/podtato-head-app-gitops-promoter-prod-service-discovery
+  labels:
+    app.kubernetes.io/component: podtato-head-app-gitops-promoter-prod-service-discovery
+    app.kubernetes.io/instance: podtato-head-app-gitops-promoter-prod
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: podtato-head
+    app.kubernetes.io/version: 0.2.7
+    helm.sh/chart: podtato-head-0.2.7
+  name: podtato-head-app-gitops-promoter-prod-service-discovery
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    argocd.argoproj.io/tracking-id: podtato-head-app-gitops-promoter-prod:/Service:/podtato-head-app-gitops-promoter-prod-entry
+  labels:
+    app.kubernetes.io/component: podtato-head-app-gitops-promoter-prod-entry
+    app.kubernetes.io/instance: podtato-head-app-gitops-promoter-prod
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: podtato-head
+    app.kubernetes.io/version: 0.2.7
+    helm.sh/chart: podtato-head-0.2.7
+  name: podtato-head-app-gitops-promoter-prod-entry
+spec:
+  ports:
+    - name: http
+      port: 9000
+      protocol: TCP
+      targetPort: http
+  selector:
+    app.kubernetes.io/component: podtato-head-app-gitops-promoter-prod-entry
+    app.kubernetes.io/instance: podtato-head-app-gitops-promoter-prod
+    app.kubernetes.io/name: podtato-head
+  type: LoadBalancer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    argocd.argoproj.io/tracking-id: podtato-head-app-gitops-promoter-prod:/Service:/podtato-head-app-gitops-promoter-prod-hat
+  labels:
+    app.kubernetes.io/component: podtato-head-app-gitops-promoter-prod-hat
+    app.kubernetes.io/instance: podtato-head-app-gitops-promoter-prod
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: podtato-head
+    app.kubernetes.io/version: 0.2.7
+    helm.sh/chart: podtato-head-0.2.7
+  name: podtato-head-app-gitops-promoter-prod-hat
+spec:
+  ports:
+    - name: http
+      port: 9001
+      protocol: TCP
+      targetPort: http
+  selector:
+    app.kubernetes.io/component: podtato-head-app-gitops-promoter-prod-hat
+    app.kubernetes.io/instance: podtato-head-app-gitops-promoter-prod
+    app.kubernetes.io/name: podtato-head
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    argocd.argoproj.io/tracking-id: podtato-head-app-gitops-promoter-prod:/Service:/podtato-head-app-gitops-promoter-prod-left-arm
+  labels:
+    app.kubernetes.io/component: podtato-head-app-gitops-promoter-prod-left-arm
+    app.kubernetes.io/instance: podtato-head-app-gitops-promoter-prod
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: podtato-head
+    app.kubernetes.io/version: 0.2.7
+    helm.sh/chart: podtato-head-0.2.7
+  name: podtato-head-app-gitops-promoter-prod-left-arm
+spec:
+  ports:
+    - name: http
+      port: 9003
+      protocol: TCP
+      targetPort: http
+  selector:
+    app.kubernetes.io/component: podtato-head-app-gitops-promoter-prod-left-arm
+    app.kubernetes.io/instance: podtato-head-app-gitops-promoter-prod
+    app.kubernetes.io/name: podtato-head
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    argocd.argoproj.io/tracking-id: podtato-head-app-gitops-promoter-prod:/Service:/podtato-head-app-gitops-promoter-prod-left-leg
+  labels:
+    app.kubernetes.io/component: podtato-head-app-gitops-promoter-prod-left-leg
+    app.kubernetes.io/instance: podtato-head-app-gitops-promoter-prod
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: podtato-head
+    app.kubernetes.io/version: 0.2.7
+    helm.sh/chart: podtato-head-0.2.7
+  name: podtato-head-app-gitops-promoter-prod-left-leg
+spec:
+  ports:
+    - name: http
+      port: 9002
+      protocol: TCP
+      targetPort: http
+  selector:
+    app.kubernetes.io/component: podtato-head-app-gitops-promoter-prod-left-leg
+    app.kubernetes.io/instance: podtato-head-app-gitops-promoter-prod
+    app.kubernetes.io/name: podtato-head
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    argocd.argoproj.io/tracking-id: podtato-head-app-gitops-promoter-prod:/Service:/podtato-head-app-gitops-promoter-prod-right-arm
+  labels:
+    app.kubernetes.io/component: podtato-head-app-gitops-promoter-prod-right-arm
+    app.kubernetes.io/instance: podtato-head-app-gitops-promoter-prod
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: podtato-head
+    app.kubernetes.io/version: 0.2.7
+    helm.sh/chart: podtato-head-0.2.7
+  name: podtato-head-app-gitops-promoter-prod-right-arm
+spec:
+  ports:
+    - name: http
+      port: 9005
+      protocol: TCP
+      targetPort: http
+  selector:
+    app.kubernetes.io/component: podtato-head-app-gitops-promoter-prod-right-arm
+    app.kubernetes.io/instance: podtato-head-app-gitops-promoter-prod
+    app.kubernetes.io/name: podtato-head
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    argocd.argoproj.io/tracking-id: podtato-head-app-gitops-promoter-prod:/Service:/podtato-head-app-gitops-promoter-prod-right-leg
+  labels:
+    app.kubernetes.io/component: podtato-head-app-gitops-promoter-prod-right-leg
+    app.kubernetes.io/instance: podtato-head-app-gitops-promoter-prod
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: podtato-head
+    app.kubernetes.io/version: 0.2.7
+    helm.sh/chart: podtato-head-0.2.7
+  name: podtato-head-app-gitops-promoter-prod-right-leg
+spec:
+  ports:
+    - name: http
+      port: 9004
+      protocol: TCP
+      targetPort: http
+  selector:
+    app.kubernetes.io/component: podtato-head-app-gitops-promoter-prod-right-leg
+    app.kubernetes.io/instance: podtato-head-app-gitops-promoter-prod
+    app.kubernetes.io/name: podtato-head
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    argocd.argoproj.io/tracking-id: podtato-head-app-gitops-promoter-prod:apps/Deployment:/podtato-head-app-gitops-promoter-prod-entry
+  labels:
+    app.kubernetes.io/component: podtato-head-app-gitops-promoter-prod-entry
+    app.kubernetes.io/instance: podtato-head-app-gitops-promoter-prod
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: podtato-head
+    app.kubernetes.io/version: 0.2.7
+    helm.sh/chart: podtato-head-0.2.7
+  name: podtato-head-app-gitops-promoter-prod-entry
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: podtato-head-app-gitops-promoter-prod-entry
+      app.kubernetes.io/instance: podtato-head-app-gitops-promoter-prod
+      app.kubernetes.io/name: podtato-head
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/component: podtato-head-app-gitops-promoter-prod-entry
+        app.kubernetes.io/instance: podtato-head-app-gitops-promoter-prod
+        app.kubernetes.io/name: podtato-head
+    spec:
+      containers:
+        - env:
+            - name: SERVICES_CONFIG_FILE_PATH
+              value: /config/servicesConfig.yaml
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+          image: ghcr.io/podtato-head/entry:latest
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          name: podtato-head-app-gitops-promoter-prod-entry
+          ports:
+            - containerPort: 9000
+              name: http
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          resources: {}
+          securityContext: {}
+          volumeMounts:
+            - mountPath: /config
+              name: service-discovery-map
+      securityContext: {}
+      serviceAccountName: podtato-head-app-gitops-promoter-prod
+      terminationGracePeriodSeconds: 5
+      volumes:
+        - configMap:
+            name: podtato-head-app-gitops-promoter-prod-service-discovery
+          name: service-discovery-map
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    argocd.argoproj.io/tracking-id: podtato-head-app-gitops-promoter-prod:apps/Deployment:/podtato-head-app-gitops-promoter-prod-hat
+  labels:
+    app.kubernetes.io/component: podtato-head-app-gitops-promoter-prod-hat
+    app.kubernetes.io/instance: podtato-head-app-gitops-promoter-prod
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: podtato-head
+    app.kubernetes.io/version: 0.2.7
+    helm.sh/chart: podtato-head-0.2.7
+  name: podtato-head-app-gitops-promoter-prod-hat
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: podtato-head-app-gitops-promoter-prod-hat
+      app.kubernetes.io/instance: podtato-head-app-gitops-promoter-prod
+      app.kubernetes.io/name: podtato-head
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/component: podtato-head-app-gitops-promoter-prod-hat
+        app.kubernetes.io/instance: podtato-head-app-gitops-promoter-prod
+        app.kubernetes.io/name: podtato-head
+    spec:
+      containers:
+        - env:
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: PODTATO_PART_NUMBER
+              value: "01"
+          image: ghcr.io/podtato-head/hat:latest
+          imagePullPolicy: IfNotPresent
+          name: podtato-head-app-gitops-promoter-prod-hat
+          ports:
+            - containerPort: 9000
+              name: http
+              protocol: TCP
+          resources: {}
+          securityContext: {}
+      securityContext: {}
+      serviceAccountName: podtato-head-app-gitops-promoter-prod
+      terminationGracePeriodSeconds: 5
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    argocd.argoproj.io/tracking-id: podtato-head-app-gitops-promoter-prod:apps/Deployment:/podtato-head-app-gitops-promoter-prod-left-arm
+  labels:
+    app.kubernetes.io/component: podtato-head-app-gitops-promoter-prod-left-arm
+    app.kubernetes.io/instance: podtato-head-app-gitops-promoter-prod
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: podtato-head
+    app.kubernetes.io/version: 0.2.7
+    helm.sh/chart: podtato-head-0.2.7
+  name: podtato-head-app-gitops-promoter-prod-left-arm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: podtato-head-app-gitops-promoter-prod-left-arm
+      app.kubernetes.io/instance: podtato-head-app-gitops-promoter-prod
+      app.kubernetes.io/name: podtato-head
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/component: podtato-head-app-gitops-promoter-prod-left-arm
+        app.kubernetes.io/instance: podtato-head-app-gitops-promoter-prod
+        app.kubernetes.io/name: podtato-head
+    spec:
+      containers:
+        - env:
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+          image: ghcr.io/podtato-head/left-arm:latest
+          imagePullPolicy: IfNotPresent
+          name: podtato-head-app-gitops-promoter-prod-left-arm
+          ports:
+            - containerPort: 9000
+              name: http
+              protocol: TCP
+          resources: {}
+          securityContext: {}
+      securityContext: {}
+      serviceAccountName: podtato-head-app-gitops-promoter-prod
+      terminationGracePeriodSeconds: 5
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    argocd.argoproj.io/tracking-id: podtato-head-app-gitops-promoter-prod:apps/Deployment:/podtato-head-app-gitops-promoter-prod-left-leg
+  labels:
+    app.kubernetes.io/component: podtato-head-app-gitops-promoter-prod-left-leg
+    app.kubernetes.io/instance: podtato-head-app-gitops-promoter-prod
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: podtato-head
+    app.kubernetes.io/version: 0.2.7
+    helm.sh/chart: podtato-head-0.2.7
+  name: podtato-head-app-gitops-promoter-prod-left-leg
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: podtato-head-app-gitops-promoter-prod-left-leg
+      app.kubernetes.io/instance: podtato-head-app-gitops-promoter-prod
+      app.kubernetes.io/name: podtato-head
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/component: podtato-head-app-gitops-promoter-prod-left-leg
+        app.kubernetes.io/instance: podtato-head-app-gitops-promoter-prod
+        app.kubernetes.io/name: podtato-head
+    spec:
+      containers:
+        - env:
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+          image: ghcr.io/podtato-head/left-leg:latest
+          imagePullPolicy: IfNotPresent
+          name: podtato-head-app-gitops-promoter-prod-left-leg
+          ports:
+            - containerPort: 9000
+              name: http
+              protocol: TCP
+          resources: {}
+          securityContext: {}
+      securityContext: {}
+      serviceAccountName: podtato-head-app-gitops-promoter-prod
+      terminationGracePeriodSeconds: 5
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    argocd.argoproj.io/tracking-id: podtato-head-app-gitops-promoter-prod:apps/Deployment:/podtato-head-app-gitops-promoter-prod-right-arm
+  labels:
+    app.kubernetes.io/component: podtato-head-app-gitops-promoter-prod-right-arm
+    app.kubernetes.io/instance: podtato-head-app-gitops-promoter-prod
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: podtato-head
+    app.kubernetes.io/version: 0.2.7
+    helm.sh/chart: podtato-head-0.2.7
+  name: podtato-head-app-gitops-promoter-prod-right-arm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: podtato-head-app-gitops-promoter-prod-right-arm
+      app.kubernetes.io/instance: podtato-head-app-gitops-promoter-prod
+      app.kubernetes.io/name: podtato-head
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/component: podtato-head-app-gitops-promoter-prod-right-arm
+        app.kubernetes.io/instance: podtato-head-app-gitops-promoter-prod
+        app.kubernetes.io/name: podtato-head
+    spec:
+      containers:
+        - env:
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+          image: ghcr.io/podtato-head/right-arm:latest
+          imagePullPolicy: IfNotPresent
+          name: podtato-head-app-gitops-promoter-prod-right-arm
+          ports:
+            - containerPort: 9000
+              name: http
+              protocol: TCP
+          resources: {}
+          securityContext: {}
+      securityContext: {}
+      serviceAccountName: podtato-head-app-gitops-promoter-prod
+      terminationGracePeriodSeconds: 5
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    argocd.argoproj.io/tracking-id: podtato-head-app-gitops-promoter-prod:apps/Deployment:/podtato-head-app-gitops-promoter-prod-right-leg
+  labels:
+    app.kubernetes.io/component: podtato-head-app-gitops-promoter-prod-right-leg
+    app.kubernetes.io/instance: podtato-head-app-gitops-promoter-prod
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: podtato-head
+    app.kubernetes.io/version: 0.2.7
+    helm.sh/chart: podtato-head-0.2.7
+  name: podtato-head-app-gitops-promoter-prod-right-leg
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: podtato-head-app-gitops-promoter-prod-right-leg
+      app.kubernetes.io/instance: podtato-head-app-gitops-promoter-prod
+      app.kubernetes.io/name: podtato-head
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/component: podtato-head-app-gitops-promoter-prod-right-leg
+        app.kubernetes.io/instance: podtato-head-app-gitops-promoter-prod
+        app.kubernetes.io/name: podtato-head
+    spec:
+      containers:
+        - env:
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+          image: ghcr.io/podtato-head/right-leg:latest
+          imagePullPolicy: IfNotPresent
+          name: podtato-head-app-gitops-promoter-prod-right-leg
+          ports:
+            - containerPort: 9000
+              name: http
+              protocol: TCP
+          resources: {}
+          securityContext: {}
+      securityContext: {}
+      serviceAccountName: podtato-head-app-gitops-promoter-prod
+      terminationGracePeriodSeconds: 5
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    argocd.argoproj.io/tracking-id: podtato-head-app-gitops-promoter-prod:/Pod:/podtato-head-app-gitops-promoter-prod-test-connection
+    helm.sh/hook: test
+  labels:
+    app.kubernetes.io/instance: podtato-head-app-gitops-promoter-prod
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: podtato-head
+    app.kubernetes.io/version: 0.2.7
+    helm.sh/chart: podtato-head-0.2.7
+  name: podtato-head-app-gitops-promoter-prod-test-connection
+spec:
+  containers:
+    - args:
+        - podtato-entry:9000
+      command:
+        - wget
+      image: busybox
+      name: wget
+  restartPolicy: Never
