@@ -1,0 +1,93 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: podtato-head-app-gitops-promoter
+  namespace: argocd
+spec:
+  generators:
+  - list:
+      elements:
+      - stage: dev
+      - stage: qs
+      - stage: prod
+  template:
+    metadata:
+      name: podtato-head-app-gitops-promoter-{{stage}}
+      labels: # This label allows the ArgoCDCommitStatus to find the applications.
+        app-name: podtato-head
+    spec:
+      project: default
+      sourceHydrator:
+        drySource:
+          repoURL: https://github.com/dirien/gitops-promotion-tools-why-you-need-to-add-them-to-your-gitops-toolkit-in-2025
+          path: app/chart
+          targetRevision: HEAD
+        hydrateTo:
+          targetBranch: environment/{{stage}}-next
+        syncSource:
+          targetBranch: environment/{{stage}}
+          path: app/chart
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: podtato-head-app-gitops-promoter-{{stage}}
+      syncPolicy:
+        automated:
+          prune: true
+          allowEmpty: true
+          selfHeal: true
+        syncOptions:
+        - CreateNamespace=true
+---
+apiVersion: promoter.argoproj.io/v1alpha1
+kind: ScmProvider
+metadata:
+  name: gitops-promoter-scmprovider
+  namespace: promoter-system
+spec:
+  secretRef:
+    name: my-gitops-promoter-app
+  github:
+    appID: 1640982
+    installationID: 76879249
+---
+apiVersion: promoter.argoproj.io/v1alpha1
+kind: GitRepository
+metadata:
+  name: gitops-promoter-gitrepository
+  namespace: promoter-system
+spec:
+  github:
+    name: gitops-promotion-tools-why-you-need-to-add-them-to-your-gitops-toolkit-in-2025
+    owner: dirien
+  scmProviderRef:
+    name: gitops-promoter-scmprovider
+---
+apiVersion: promoter.argoproj.io/v1alpha1
+kind: PromotionStrategy
+metadata:
+  name: gitops-promoter-promotionstrategy
+  namespace: promoter-system
+spec:
+  activeCommitStatuses:
+  - key: argocd-health
+  environments:
+  - autoMerge: true
+    branch: environment/dev
+  - autoMerge: true
+    branch: environment/qs
+  - autoMerge: false
+    branch: environment/prod
+  gitRepositoryRef:
+    name: gitops-promoter-gitrepository
+---
+apiVersion: promoter.argoproj.io/v1alpha1
+kind: ArgoCDCommitStatus
+metadata:
+  name: argocd-health
+  namespace: promoter-system
+spec:
+  promotionStrategyRef:
+    name: gitops-promoter-promotionstrategy
+  applicationSelector:
+    matchLabels:
+      app-name: podtato-head

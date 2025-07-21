@@ -1,0 +1,176 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: podtato-head-app-kargo
+  namespace: argocd
+spec:
+  generators:
+  - list:
+      elements:
+      - stage: dev
+      - stage: qs
+      - stage: prod
+  template:
+    metadata:
+      name: podtato-head-app-kargo-{{stage}}
+      annotations:
+        kargo.akuity.io/authorized-stage: podtato-head-app:{{stage}}
+    spec:
+      project: default
+      source:
+        repoURL: 'https://github.com/dirien/gitops-promotion-tools-why-you-need-to-add-them-to-your-gitops-toolkit-in-2025.git'
+        targetRevision: stage/{{stage}}
+        path: .
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: podtato-head-app-kargo-{{stage}}
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+        - CreateNamespace=true
+---
+apiVersion: kargo.akuity.io/v1alpha1
+kind: Project
+metadata:
+  name: podtato-head-app
+---
+apiVersion: v1
+kind: Secret
+type: Opaque
+metadata:
+  name: podtato-head-app-repo
+  namespace: podtato-head-app
+  labels:
+    kargo.akuity.io/cred-type: git
+stringData:
+  repoURL: "https://github.com/dirien/gitops-promotion-tools-why-you-need-to-add-them-to-your-gitops-toolkit-in-2025.git"
+  username: "dirien"
+  password: "xxx"
+---
+apiVersion: kargo.akuity.io/v1alpha1
+kind: Warehouse
+metadata:
+  name: podtato-head-app-warehouse
+  namespace: podtato-head-app
+spec:
+  freightCreationPolicy: Automatic
+  interval: 30s
+  subscriptions:
+  - git:
+      repoURL: "https://github.com/dirien/gitops-promotion-tools-why-you-need-to-add-them-to-your-gitops-toolkit-in-2025.git"
+      includePaths:
+      - app/
+---
+apiVersion: kargo.akuity.io/v1alpha1
+kind: Stage
+metadata:
+  name: dev
+  namespace: podtato-head-app
+  annotations:
+    kargo.akuity.io/color: red
+spec:
+  promotionTemplate:
+    spec:
+      steps:
+      - task:
+          name: promote
+        vars:
+        - name: stageFolder
+          value: stages/test
+  requestedFreight:
+  - origin:
+      kind: Warehouse
+      name: podtato-head-app-warehouse
+    sources:
+      direct: true
+---
+apiVersion: kargo.akuity.io/v1alpha1
+kind: Stage
+metadata:
+  name: qs
+  namespace: podtato-head-app
+  annotations:
+    kargo.akuity.io/color: green
+spec:
+  promotionTemplate:
+    spec:
+      steps:
+      - task:
+          name: promote
+        vars:
+        - name: stageFolder
+          value: stages/uat
+  requestedFreight:
+  - origin:
+      kind: Warehouse
+      name: podtato-head-app-warehouse
+    sources:
+      stages:
+      - dev
+---
+apiVersion: kargo.akuity.io/v1alpha1
+kind: Stage
+metadata:
+  name: prod
+  namespace: podtato-head-app
+  annotations:
+    kargo.akuity.io/color: blue
+spec:
+  promotionTemplate:
+    spec:
+      steps:
+      - task:
+          name: promote
+        vars:
+        - name: stageFolder
+          value: stages/prod-nyc
+  requestedFreight:
+  - origin:
+      kind: Warehouse
+      name: podtato-head-app-warehouse
+    sources:
+      stages:
+      - qs
+---
+apiVersion: kargo.akuity.io/v1alpha1
+kind: PromotionTask
+metadata:
+  name: promote
+  namespace: podtato-head-app
+spec:
+  vars:
+  - name: repoURL
+    value: https://github.com/dirien/gitops-promotion-tools-why-you-need-to-add-them-to-your-gitops-toolkit-in-2025.git
+
+  steps:
+  - uses: git-clone
+    as: clone
+    config:
+      repoURL: ${{ vars.repoURL }}
+      checkout:
+      - commit: ${{ commitFrom(vars.repoURL).ID }}
+        path: ./src
+      - branch: stage/${{ ctx.stage }}
+        create: true
+        path: ./out
+  - uses: git-clear
+    config:
+      path: ./out
+  - uses: helm-template
+    config:
+      releaseName: podtato-head-app-kargo-${{ ctx.stage }}
+      path: ./src/app/chart/
+      valuesFiles:
+      - ./src/app/chart/values.yaml
+      outPath: ./out/manifests.yaml
+  - uses: git-commit
+    as: commit
+    config:
+      path: ./out
+      message: "Update manifests for stage ${{ ctx.stage }}"
+  - uses: git-push
+    config:
+      path: ./out
+      targetBranch: stage/${{ ctx.stage }}
