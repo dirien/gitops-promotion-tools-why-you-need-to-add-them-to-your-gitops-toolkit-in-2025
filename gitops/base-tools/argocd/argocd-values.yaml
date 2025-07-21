@@ -8,7 +8,8 @@ notifications:
   enabled: false
 dex:
   enabled: false
-
+commitServer:
+  enabled: true
 server:
   resources:
     requests:
