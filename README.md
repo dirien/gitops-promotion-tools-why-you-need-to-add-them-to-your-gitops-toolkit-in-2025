@@ -34,12 +34,47 @@ Practical implementations of automated GitOps promotion workflows.
 ## Repository Structure
 
 ```
-├── kargo/                 # Kargo demo setup and examples
-├── gitops-promoter/       # GitOps Promoter demo configurations
-├── telefonistka/          # Telefonistka demo implementations
-├── docs/                  # Talk slides and additional documentation
-└── examples/              # Common patterns and use cases
+├── infra/                 # Pulumi infrastructure code for DigitalOcean Kubernetes cluster
+├── base-tools/            # Pulumi code for installing base tools using GitOps bridge pattern
+├── gitops/                # GitOps configurations and applications
+│   ├── base-tools/        # Base tool configurations (ArgoCD, cert-manager, etc.)
+│   ├── promote-app/       # Application promotion configurations
+│   └── promote-tools/     # GitOps promotion tool configurations
+├── app/                   # Sample application (Podtato Head) Helm chart
+└── docs/                  # Talk slides and additional documentation
 ```
+
+## Infrastructure
+
+This repository uses **Pulumi** for Infrastructure as Code to provision:
+
+- **DigitalOcean Kubernetes Cluster**: Complete K8s infrastructure setup
+- **Base Tools Installation**: Leveraging the **GitOps Bridge Pattern** to seamlessly connect IaC-provisioned resources with GitOps-managed deployments
+
+### GitOps Bridge Pattern
+
+The [GitOps Bridge Pattern](https://github.com/gitops-bridge-dev/gitops-bridge) bridges the gap between Infrastructure as Code (IaC) and GitOps by enabling Kubernetes administrators to:
+
+- Use IaC tools (Pulumi) for cluster provisioning and cloud resource creation
+- Automatically configure GitOps tools with metadata from IaC-provisioned resources
+- Install and configure base tools (ArgoCD, cert-manager, metrics-server) through GitOps
+- Maintain separation of concerns while ensuring seamless integration
+
+### Getting Started with Infrastructure
+
+1. **Provision Infrastructure**: Deploy DigitalOcean Kubernetes cluster
+   ```bash
+   cd infra/
+   pulumi up
+   ```
+
+2. **Install Base Tools**: Deploy foundational tools using GitOps bridge
+   ```bash
+   cd base-tools/
+   pulumi up
+   ```
+
+3. **Access ArgoCD**: The GitOps engine will be available for managing applications and promotion workflows
 
 ## Getting Started
 
