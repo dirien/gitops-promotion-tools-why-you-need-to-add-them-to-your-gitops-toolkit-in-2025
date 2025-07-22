@@ -3,11 +3,11 @@
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: podtato-head-app-dev
+  name: podtato-head-app-kargo-dev
   labels:
     helm.sh/chart: podtato-head-0.2.7
     app.kubernetes.io/name: podtato-head
-    app.kubernetes.io/instance: podtato-head-app-dev
+    app.kubernetes.io/instance: podtato-head-app-kargo-dev
     app.kubernetes.io/version: "0.2.7"
     app.kubernetes.io/managed-by: Helm
 imagePullSecrets:
@@ -17,34 +17,34 @@ imagePullSecrets:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: podtato-head-app-dev-service-discovery
+  name: podtato-head-app-kargo-dev-service-discovery
   labels:
     helm.sh/chart: podtato-head-0.2.7
     app.kubernetes.io/name: podtato-head
-    app.kubernetes.io/instance: podtato-head-app-dev
+    app.kubernetes.io/instance: podtato-head-app-kargo-dev
     app.kubernetes.io/version: "0.2.7"
     app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/component: podtato-head-app-dev-service-discovery
+    app.kubernetes.io/component: podtato-head-app-kargo-dev-service-discovery
 data:
     servicesConfig.yaml: |
-        hat:       "http://podtato-head-app-dev-hat:9001"
-        left-leg:  "http://podtato-head-app-dev-left-leg:9002"
-        left-arm:  "http://podtato-head-app-dev-left-arm:9003"
-        right-leg: "http://podtato-head-app-dev-right-leg:9004"
-        right-arm: "http://podtato-head-app-dev-right-arm:9005"
+        hat:       "http://podtato-head-app-kargo-dev-hat:9001"
+        left-leg:  "http://podtato-head-app-kargo-dev-left-leg:9002"
+        left-arm:  "http://podtato-head-app-kargo-dev-left-arm:9003"
+        right-leg: "http://podtato-head-app-kargo-dev-right-leg:9004"
+        right-arm: "http://podtato-head-app-kargo-dev-right-arm:9005"
 ---
 # Source: podtato-head/templates/service-entry.yaml
 apiVersion: v1
 kind: Service
 metadata:
-  name: podtato-head-app-dev-entry
+  name: podtato-head-app-kargo-dev-entry
   labels:
     helm.sh/chart: podtato-head-0.2.7
     app.kubernetes.io/name: podtato-head
-    app.kubernetes.io/instance: podtato-head-app-dev
+    app.kubernetes.io/instance: podtato-head-app-kargo-dev
     app.kubernetes.io/version: "0.2.7"
     app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/component: podtato-head-app-dev-entry
+    app.kubernetes.io/component: podtato-head-app-kargo-dev-entry
 spec:
   type: LoadBalancer
   ports:
@@ -54,21 +54,21 @@ spec:
       name: http
   selector:
     app.kubernetes.io/name: podtato-head
-    app.kubernetes.io/instance: podtato-head-app-dev
-    app.kubernetes.io/component: podtato-head-app-dev-entry
+    app.kubernetes.io/instance: podtato-head-app-kargo-dev
+    app.kubernetes.io/component: podtato-head-app-kargo-dev-entry
 ---
 # Source: podtato-head/templates/service-hat.yaml
 apiVersion: v1
 kind: Service
 metadata:
-  name: podtato-head-app-dev-hat
+  name: podtato-head-app-kargo-dev-hat
   labels:
     helm.sh/chart: podtato-head-0.2.7
     app.kubernetes.io/name: podtato-head
-    app.kubernetes.io/instance: podtato-head-app-dev
+    app.kubernetes.io/instance: podtato-head-app-kargo-dev
     app.kubernetes.io/version: "0.2.7"
     app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/component: podtato-head-app-dev-hat
+    app.kubernetes.io/component: podtato-head-app-kargo-dev-hat
 spec:
   type: ClusterIP
   ports:
@@ -78,21 +78,21 @@ spec:
       name: http
   selector:
     app.kubernetes.io/name: podtato-head
-    app.kubernetes.io/instance: podtato-head-app-dev
-    app.kubernetes.io/component: podtato-head-app-dev-hat
+    app.kubernetes.io/instance: podtato-head-app-kargo-dev
+    app.kubernetes.io/component: podtato-head-app-kargo-dev-hat
 ---
 # Source: podtato-head/templates/service-left-arm.yaml
 apiVersion: v1
 kind: Service
 metadata:
-  name: podtato-head-app-dev-left-arm
+  name: podtato-head-app-kargo-dev-left-arm
   labels:
     helm.sh/chart: podtato-head-0.2.7
     app.kubernetes.io/name: podtato-head
-    app.kubernetes.io/instance: podtato-head-app-dev
+    app.kubernetes.io/instance: podtato-head-app-kargo-dev
     app.kubernetes.io/version: "0.2.7"
     app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/component: podtato-head-app-dev-left-arm
+    app.kubernetes.io/component: podtato-head-app-kargo-dev-left-arm
 spec:
   type: ClusterIP
   ports:
@@ -102,21 +102,21 @@ spec:
       name: http
   selector:
     app.kubernetes.io/name: podtato-head
-    app.kubernetes.io/instance: podtato-head-app-dev
-    app.kubernetes.io/component: podtato-head-app-dev-left-arm
+    app.kubernetes.io/instance: podtato-head-app-kargo-dev
+    app.kubernetes.io/component: podtato-head-app-kargo-dev-left-arm
 ---
 # Source: podtato-head/templates/service-left-leg.yaml
 apiVersion: v1
 kind: Service
 metadata:
-  name: podtato-head-app-dev-left-leg
+  name: podtato-head-app-kargo-dev-left-leg
   labels:
     helm.sh/chart: podtato-head-0.2.7
     app.kubernetes.io/name: podtato-head
-    app.kubernetes.io/instance: podtato-head-app-dev
+    app.kubernetes.io/instance: podtato-head-app-kargo-dev
     app.kubernetes.io/version: "0.2.7"
     app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/component: podtato-head-app-dev-left-leg
+    app.kubernetes.io/component: podtato-head-app-kargo-dev-left-leg
 spec:
   type: ClusterIP
   ports:
@@ -126,21 +126,21 @@ spec:
       name: http
   selector:
     app.kubernetes.io/name: podtato-head
-    app.kubernetes.io/instance: podtato-head-app-dev
-    app.kubernetes.io/component: podtato-head-app-dev-left-leg
+    app.kubernetes.io/instance: podtato-head-app-kargo-dev
+    app.kubernetes.io/component: podtato-head-app-kargo-dev-left-leg
 ---
 # Source: podtato-head/templates/service-right-arm.yaml
 apiVersion: v1
 kind: Service
 metadata:
-  name: podtato-head-app-dev-right-arm
+  name: podtato-head-app-kargo-dev-right-arm
   labels:
     helm.sh/chart: podtato-head-0.2.7
     app.kubernetes.io/name: podtato-head
-    app.kubernetes.io/instance: podtato-head-app-dev
+    app.kubernetes.io/instance: podtato-head-app-kargo-dev
     app.kubernetes.io/version: "0.2.7"
     app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/component: podtato-head-app-dev-right-arm
+    app.kubernetes.io/component: podtato-head-app-kargo-dev-right-arm
 spec:
   type: ClusterIP
   ports:
@@ -150,21 +150,21 @@ spec:
       name: http
   selector:
     app.kubernetes.io/name: podtato-head
-    app.kubernetes.io/instance: podtato-head-app-dev
-    app.kubernetes.io/component: podtato-head-app-dev-right-arm
+    app.kubernetes.io/instance: podtato-head-app-kargo-dev
+    app.kubernetes.io/component: podtato-head-app-kargo-dev-right-arm
 ---
 # Source: podtato-head/templates/service-right-leg.yaml
 apiVersion: v1
 kind: Service
 metadata:
-  name: podtato-head-app-dev-right-leg
+  name: podtato-head-app-kargo-dev-right-leg
   labels:
     helm.sh/chart: podtato-head-0.2.7
     app.kubernetes.io/name: podtato-head
-    app.kubernetes.io/instance: podtato-head-app-dev
+    app.kubernetes.io/instance: podtato-head-app-kargo-dev
     app.kubernetes.io/version: "0.2.7"
     app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/component: podtato-head-app-dev-right-leg
+    app.kubernetes.io/component: podtato-head-app-kargo-dev-right-leg
 spec:
   type: ClusterIP
   ports:
@@ -174,41 +174,41 @@ spec:
       name: http
   selector:
     app.kubernetes.io/name: podtato-head
-    app.kubernetes.io/instance: podtato-head-app-dev
-    app.kubernetes.io/component: podtato-head-app-dev-right-leg
+    app.kubernetes.io/instance: podtato-head-app-kargo-dev
+    app.kubernetes.io/component: podtato-head-app-kargo-dev-right-leg
 ---
 # Source: podtato-head/templates/deployment-entry.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: podtato-head-app-dev-entry
+  name: podtato-head-app-kargo-dev-entry
   labels:
     helm.sh/chart: podtato-head-0.2.7
     app.kubernetes.io/name: podtato-head
-    app.kubernetes.io/instance: podtato-head-app-dev
+    app.kubernetes.io/instance: podtato-head-app-kargo-dev
     app.kubernetes.io/version: "0.2.7"
     app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/component: podtato-head-app-dev-entry
+    app.kubernetes.io/component: podtato-head-app-kargo-dev-entry
 spec:
   replicas: 1
   selector:
     matchLabels:
       app.kubernetes.io/name: podtato-head
-      app.kubernetes.io/instance: podtato-head-app-dev
-      app.kubernetes.io/component: podtato-head-app-dev-entry
+      app.kubernetes.io/instance: podtato-head-app-kargo-dev
+      app.kubernetes.io/component: podtato-head-app-kargo-dev-entry
   template:
     metadata:
       labels:
         app.kubernetes.io/name: podtato-head
-        app.kubernetes.io/instance: podtato-head-app-dev
-        app.kubernetes.io/component: podtato-head-app-dev-entry
+        app.kubernetes.io/instance: podtato-head-app-kargo-dev
+        app.kubernetes.io/component: podtato-head-app-kargo-dev-entry
     spec:
       terminationGracePeriodSeconds: 5
-      serviceAccountName: podtato-head-app-dev
+      serviceAccountName: podtato-head-app-kargo-dev
       securityContext:
         {}
       containers:
-        - name: podtato-head-app-dev-entry
+        - name: podtato-head-app-kargo-dev-entry
           securityContext:
             {}
           image: "ghcr.io/podtato-head/entry:latest"
@@ -240,40 +240,40 @@ spec:
       volumes:
         - name: service-discovery-map
           configMap:
-              name: podtato-head-app-dev-service-discovery
+              name: podtato-head-app-kargo-dev-service-discovery
 ---
 # Source: podtato-head/templates/deployment-hat.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: podtato-head-app-dev-hat
+  name: podtato-head-app-kargo-dev-hat
   labels:
     helm.sh/chart: podtato-head-0.2.7
     app.kubernetes.io/name: podtato-head
-    app.kubernetes.io/instance: podtato-head-app-dev
+    app.kubernetes.io/instance: podtato-head-app-kargo-dev
     app.kubernetes.io/version: "0.2.7"
     app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/component: podtato-head-app-dev-hat
+    app.kubernetes.io/component: podtato-head-app-kargo-dev-hat
 spec:
   replicas: 1
   selector:
     matchLabels:
       app.kubernetes.io/name: podtato-head
-      app.kubernetes.io/instance: podtato-head-app-dev
-      app.kubernetes.io/component: podtato-head-app-dev-hat
+      app.kubernetes.io/instance: podtato-head-app-kargo-dev
+      app.kubernetes.io/component: podtato-head-app-kargo-dev-hat
   template:
     metadata:
       labels:
         app.kubernetes.io/name: podtato-head
-        app.kubernetes.io/instance: podtato-head-app-dev
-        app.kubernetes.io/component: podtato-head-app-dev-hat
+        app.kubernetes.io/instance: podtato-head-app-kargo-dev
+        app.kubernetes.io/component: podtato-head-app-kargo-dev-hat
     spec:
       terminationGracePeriodSeconds: 5
-      serviceAccountName: podtato-head-app-dev
+      serviceAccountName: podtato-head-app-kargo-dev
       securityContext:
         {}
       containers:
-        - name: podtato-head-app-dev-hat
+        - name: podtato-head-app-kargo-dev-hat
           securityContext:
             {}
           image: "ghcr.io/podtato-head/hat:latest"
@@ -298,40 +298,40 @@ spec:
                 fieldRef:
                   fieldPath: metadata.name
             - name: PODTATO_PART_NUMBER
-              value: "02"
+              value: "01"
 ---
 # Source: podtato-head/templates/deployment-left-arm.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: podtato-head-app-dev-left-arm
+  name: podtato-head-app-kargo-dev-left-arm
   labels:
     helm.sh/chart: podtato-head-0.2.7
     app.kubernetes.io/name: podtato-head
-    app.kubernetes.io/instance: podtato-head-app-dev
+    app.kubernetes.io/instance: podtato-head-app-kargo-dev
     app.kubernetes.io/version: "0.2.7"
     app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/component: podtato-head-app-dev-left-arm
+    app.kubernetes.io/component: podtato-head-app-kargo-dev-left-arm
 spec:
   replicas: 1
   selector:
     matchLabels:
       app.kubernetes.io/name: podtato-head
-      app.kubernetes.io/instance: podtato-head-app-dev
-      app.kubernetes.io/component: podtato-head-app-dev-left-arm
+      app.kubernetes.io/instance: podtato-head-app-kargo-dev
+      app.kubernetes.io/component: podtato-head-app-kargo-dev-left-arm
   template:
     metadata:
       labels:
         app.kubernetes.io/name: podtato-head
-        app.kubernetes.io/instance: podtato-head-app-dev
-        app.kubernetes.io/component: podtato-head-app-dev-left-arm
+        app.kubernetes.io/instance: podtato-head-app-kargo-dev
+        app.kubernetes.io/component: podtato-head-app-kargo-dev-left-arm
     spec:
       terminationGracePeriodSeconds: 5
-      serviceAccountName: podtato-head-app-dev
+      serviceAccountName: podtato-head-app-kargo-dev
       securityContext:
         {}
       containers:
-        - name: podtato-head-app-dev-left-arm
+        - name: podtato-head-app-kargo-dev-left-arm
           securityContext:
             {}
           image: "ghcr.io/podtato-head/left-arm:latest"
@@ -360,34 +360,34 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: podtato-head-app-dev-left-leg
+  name: podtato-head-app-kargo-dev-left-leg
   labels:
     helm.sh/chart: podtato-head-0.2.7
     app.kubernetes.io/name: podtato-head
-    app.kubernetes.io/instance: podtato-head-app-dev
+    app.kubernetes.io/instance: podtato-head-app-kargo-dev
     app.kubernetes.io/version: "0.2.7"
     app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/component: podtato-head-app-dev-left-leg
+    app.kubernetes.io/component: podtato-head-app-kargo-dev-left-leg
 spec:
   replicas: 1
   selector:
     matchLabels:
       app.kubernetes.io/name: podtato-head
-      app.kubernetes.io/instance: podtato-head-app-dev
-      app.kubernetes.io/component: podtato-head-app-dev-left-leg
+      app.kubernetes.io/instance: podtato-head-app-kargo-dev
+      app.kubernetes.io/component: podtato-head-app-kargo-dev-left-leg
   template:
     metadata:
       labels:
         app.kubernetes.io/name: podtato-head
-        app.kubernetes.io/instance: podtato-head-app-dev
-        app.kubernetes.io/component: podtato-head-app-dev-left-leg
+        app.kubernetes.io/instance: podtato-head-app-kargo-dev
+        app.kubernetes.io/component: podtato-head-app-kargo-dev-left-leg
     spec:
       terminationGracePeriodSeconds: 5
-      serviceAccountName: podtato-head-app-dev
+      serviceAccountName: podtato-head-app-kargo-dev
       securityContext:
         {}
       containers:
-        - name: podtato-head-app-dev-left-leg
+        - name: podtato-head-app-kargo-dev-left-leg
           securityContext:
             {}
           image: "ghcr.io/podtato-head/left-leg:latest"
@@ -416,34 +416,34 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: podtato-head-app-dev-right-arm
+  name: podtato-head-app-kargo-dev-right-arm
   labels:
     helm.sh/chart: podtato-head-0.2.7
     app.kubernetes.io/name: podtato-head
-    app.kubernetes.io/instance: podtato-head-app-dev
+    app.kubernetes.io/instance: podtato-head-app-kargo-dev
     app.kubernetes.io/version: "0.2.7"
     app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/component: podtato-head-app-dev-right-arm
+    app.kubernetes.io/component: podtato-head-app-kargo-dev-right-arm
 spec:
   replicas: 1
   selector:
     matchLabels:
       app.kubernetes.io/name: podtato-head
-      app.kubernetes.io/instance: podtato-head-app-dev
-      app.kubernetes.io/component: podtato-head-app-dev-right-arm
+      app.kubernetes.io/instance: podtato-head-app-kargo-dev
+      app.kubernetes.io/component: podtato-head-app-kargo-dev-right-arm
   template:
     metadata:
       labels:
         app.kubernetes.io/name: podtato-head
-        app.kubernetes.io/instance: podtato-head-app-dev
-        app.kubernetes.io/component: podtato-head-app-dev-right-arm
+        app.kubernetes.io/instance: podtato-head-app-kargo-dev
+        app.kubernetes.io/component: podtato-head-app-kargo-dev-right-arm
     spec:
       terminationGracePeriodSeconds: 5
-      serviceAccountName: podtato-head-app-dev
+      serviceAccountName: podtato-head-app-kargo-dev
       securityContext:
         {}
       containers:
-        - name: podtato-head-app-dev-right-arm
+        - name: podtato-head-app-kargo-dev-right-arm
           securityContext:
             {}
           image: "ghcr.io/podtato-head/right-arm:latest"
@@ -472,34 +472,34 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: podtato-head-app-dev-right-leg
+  name: podtato-head-app-kargo-dev-right-leg
   labels:
     helm.sh/chart: podtato-head-0.2.7
     app.kubernetes.io/name: podtato-head
-    app.kubernetes.io/instance: podtato-head-app-dev
+    app.kubernetes.io/instance: podtato-head-app-kargo-dev
     app.kubernetes.io/version: "0.2.7"
     app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/component: podtato-head-app-dev-right-leg
+    app.kubernetes.io/component: podtato-head-app-kargo-dev-right-leg
 spec:
   replicas: 1
   selector:
     matchLabels:
       app.kubernetes.io/name: podtato-head
-      app.kubernetes.io/instance: podtato-head-app-dev
-      app.kubernetes.io/component: podtato-head-app-dev-right-leg
+      app.kubernetes.io/instance: podtato-head-app-kargo-dev
+      app.kubernetes.io/component: podtato-head-app-kargo-dev-right-leg
   template:
     metadata:
       labels:
         app.kubernetes.io/name: podtato-head
-        app.kubernetes.io/instance: podtato-head-app-dev
-        app.kubernetes.io/component: podtato-head-app-dev-right-leg
+        app.kubernetes.io/instance: podtato-head-app-kargo-dev
+        app.kubernetes.io/component: podtato-head-app-kargo-dev-right-leg
     spec:
       terminationGracePeriodSeconds: 5
-      serviceAccountName: podtato-head-app-dev
+      serviceAccountName: podtato-head-app-kargo-dev
       securityContext:
         {}
       containers:
-        - name: podtato-head-app-dev-right-leg
+        - name: podtato-head-app-kargo-dev-right-leg
           securityContext:
             {}
           image: "ghcr.io/podtato-head/right-leg:latest"
@@ -528,11 +528,11 @@ spec:
 apiVersion: v1
 kind: Pod
 metadata:
-  name: "podtato-head-app-dev-test-connection"
+  name: "podtato-head-app-kargo-dev-test-connection"
   labels:
     helm.sh/chart: podtato-head-0.2.7
     app.kubernetes.io/name: podtato-head
-    app.kubernetes.io/instance: podtato-head-app-dev
+    app.kubernetes.io/instance: podtato-head-app-kargo-dev
     app.kubernetes.io/version: "0.2.7"
     app.kubernetes.io/managed-by: Helm
   annotations:
