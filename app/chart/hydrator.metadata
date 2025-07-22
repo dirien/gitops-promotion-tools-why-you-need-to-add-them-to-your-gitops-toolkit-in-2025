@@ -1,6 +1,6 @@
 {
   "repoURL": "https://github.com/dirien/gitops-promotion-tools-why-you-need-to-add-them-to-your-gitops-toolkit-in-2025",
-  "drySha": "582cc9f96ca772fcd35eef83c76cbecea30b5e84",
+  "drySha": "175c437f7fb99ba4962be221832b73a7f339af5d",
   "commands": [
     "helm template . --name-template podtato-head-app-gitops-promoter-qs --include-crds"
   ]
