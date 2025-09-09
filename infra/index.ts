@@ -4,7 +4,7 @@ import * as digitalocean from "@pulumi/digitalocean";
 const clusterRegion = "fra1";
 const nodePoolName = "default";
 const nodeCount = 1;
-const version = "1.33.1-do.1";
+const version = "1.33.1-do.3";
 const doCluster = new digitalocean.KubernetesCluster("do-cluster", {
   region: clusterRegion,
   version: version,
