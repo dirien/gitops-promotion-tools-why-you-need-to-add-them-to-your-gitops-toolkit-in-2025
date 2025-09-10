@@ -328,8 +328,6 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.name
-            - name: PODTATO_PART_NUMBER
-              value: "04"
           image: ghcr.io/podtato-head/left-arm:latest
           imagePullPolicy: IfNotPresent
           name: podtato-head-app-gitops-promoter-qs-left-arm
