@@ -355,6 +355,8 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.name
+            - name: PODTATO_PART_NUMBER
+              value: "04"
 ---
 # Source: podtato-head/templates/deployment-left-leg.yaml
 apiVersion: apps/v1
