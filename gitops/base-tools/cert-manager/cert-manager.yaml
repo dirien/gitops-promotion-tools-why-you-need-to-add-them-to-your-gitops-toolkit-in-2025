@@ -14,9 +14,9 @@ spec:
     server: https://kubernetes.default.svc
   project: infra
   source:
-    repoURL: 'https://charts.jetstack.io'
+    repoURL: 'oci://quay.io/jetstack/charts/cert-manager'
     targetRevision: v1.18.2
-    chart: cert-manager
+    path: .
     helm:
       valuesObject:
         crds: 

@@ -9,9 +9,9 @@ spec:
     server: https://kubernetes.default.svc
   project: infra
   source:
-    repoURL: ghcr.io/akuity/kargo-charts
-    targetRevision: 1.6.1
-    chart: kargo
+    repoURL: oci://ghcr.io/akuity/kargo-charts/kargo
+    targetRevision: 1.7.5
+    path: .
     helm:
       valuesObject:
         api:

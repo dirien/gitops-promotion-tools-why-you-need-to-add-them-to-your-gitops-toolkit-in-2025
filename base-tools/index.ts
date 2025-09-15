@@ -3,10 +3,7 @@ import * as pulumi from "@pulumi/pulumi";
 
 const argoCD = new k8s.helm.v3.Release("argo-cd", {
     name: "argo-cd",
-    chart: "argo-cd",
-    repositoryOpts: {
-        repo: "https://argoproj.github.io/argo-helm",
-    },
+    chart: "oci://ghcr.io/argoproj/argo-helm/argo-cd",
     createNamespace: true,
     namespace: "argocd",
     values: {
@@ -45,8 +42,8 @@ const argoCD = new k8s.helm.v3.Release("argo-cd", {
 });
 
 const argocdApps = new k8s.helm.v3.Release("argocd-apps", {
-    chart: "argocd-apps",
-    repositoryOpts: argoCD.repositoryOpts,
+    name: "argocd-apps",
+    chart: "oci://ghcr.io/argoproj/argo-helm/argocd-apps",
     namespace: argoCD.namespace,
     createNamespace: false,
     valueYamlFiles: [

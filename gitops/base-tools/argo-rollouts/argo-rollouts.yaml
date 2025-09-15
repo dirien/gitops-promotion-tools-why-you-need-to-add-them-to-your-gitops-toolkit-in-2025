@@ -14,9 +14,9 @@ spec:
     server: https://kubernetes.default.svc
   project: infra
   source:
-    repoURL: 'https://argoproj.github.io/argo-helm'
-    targetRevision: 2.40.1
-    chart: argo-rollouts
+    repoURL: 'oci://ghcr.io/argoproj/argo-helm/argo-rollouts'
+    targetRevision: 2.40.4
+    path: .
   syncPolicy:
     automated:
       prune: true
