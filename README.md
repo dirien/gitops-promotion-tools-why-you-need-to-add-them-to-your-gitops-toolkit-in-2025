@@ -28,9 +28,6 @@ Complete setup and demo scenarios showing multi-environment GitOps promotion wor
 ### [GitOps Promoter](./gitops-promoter/)
 Working examples of Argo CD-native promotion patterns and configurations.
 
-### [Telefonistka](./telefonistka/)
-Practical implementations of automated GitOps promotion workflows.
-
 ## Repository Structure
 
 ```
@@ -49,7 +46,17 @@ Practical implementations of automated GitOps promotion workflows.
 This repository uses **Pulumi** for Infrastructure as Code to provision:
 
 - **DigitalOcean Kubernetes Cluster**: Complete K8s infrastructure setup
+- **Pulumi ESC Environment**: Automatically creates a Pulumi ESC (Environments, Secrets, and Configuration) environment for secure configuration management
 - **Base Tools Installation**: Leveraging the **GitOps Bridge Pattern** to seamlessly connect IaC-provisioned resources with GitOps-managed deployments
+
+### Pulumi ESC Integration
+
+This demo utilizes **Pulumi ESC** (Environments, Secrets, and Configuration) for centralized configuration management. The infrastructure automatically:
+
+1. **Creates an ESC Environment**: Automatically provisions a Pulumi ESC environment with the same name as the Kubernetes cluster
+2. **Configures Stack References**: Sets up automatic references to the infrastructure stack for seamless access to cluster configuration
+3. **Manages Kubeconfig**: Automatically makes the cluster's kubeconfig available through ESC for secure access
+4. **Enables Easy Access**: Provides simple commands to interact with the cluster through the ESC environment
 
 ### GitOps Bridge Pattern
 
@@ -62,19 +69,28 @@ The [GitOps Bridge Pattern](https://github.com/gitops-bridge-dev/gitops-bridge) 
 
 ### Getting Started with Infrastructure
 
-1. **Provision Infrastructure**: Deploy DigitalOcean Kubernetes cluster
+1. **Provision Infrastructure**: Deploy DigitalOcean Kubernetes cluster and create ESC environment
    ```bash
    cd infra/
    pulumi up
    ```
 
-2. **Install Base Tools**: Deploy foundational tools using GitOps bridge
+2. **Access Your Cluster**: Use the automatically created Pulumi ESC environment to connect
+   ```bash
+   # Connect to cluster using ESC environment
+   pulumi env run <project-name>/<cluster-name> -i -- kubectl
+   
+   # Or use k9s for interactive cluster management
+   pulumi env run <project-name>/<cluster-name> -i -- k9s
+   ```
+
+3. **Install Base Tools**: Deploy foundational tools using GitOps bridge
    ```bash
    cd base-tools/
    pulumi up
    ```
 
-3. **Access ArgoCD**: The GitOps engine will be available for managing applications and promotion workflows
+4. **Access ArgoCD**: The GitOps engine will be available for managing applications and promotion workflows
 
 ## Getting Started
 
@@ -92,7 +108,6 @@ Start with any tool directory to explore different approaches to GitOps promotio
 - [Flux](https://fluxcd.io/) - GitOps toolkit for Kubernetes
 - [Kargo](https://kargo.io/) - GitOps promotion tool
 - [GitOps Promoter](https://github.com/argoproj-labs/gitops-promoter) - Argo CD promotion tool
-- [Telefonistka](https://github.com/wayfair-incubator/telefonistka) - GitOps promotion automation
 
 ## Contributing
 

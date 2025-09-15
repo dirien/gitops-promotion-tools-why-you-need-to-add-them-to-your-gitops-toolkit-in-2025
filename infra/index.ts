@@ -40,5 +40,9 @@ values:
     dependsOn: [doCluster],
 });
 
+export const usage = pulumi.interpolate `To connect to your cluster, run: 'pulumi env run ${environmentResource.project}/${environmentResource.name} -i -- kubectl | k9s'
+To deploy the base tools, change to the base-tools directory and run: 'pulumi up' (you may need to run 'pulumi stack init dev' first)
+`;
+
 export const name = doCluster.name;
 export const kubeconfig = doCluster.kubeConfigs.apply(kubeConfigs => kubeConfigs[0].rawConfig);

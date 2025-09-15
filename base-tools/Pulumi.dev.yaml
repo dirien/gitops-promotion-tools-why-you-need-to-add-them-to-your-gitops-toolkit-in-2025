@@ -1,0 +1,2 @@
+environment:
+- gitops-promotion-tools/gitops-promotion-tools-do-cluster
