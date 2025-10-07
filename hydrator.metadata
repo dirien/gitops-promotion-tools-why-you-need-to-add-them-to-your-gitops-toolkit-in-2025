@@ -1,7 +1,7 @@
 {
   "repoURL": "https://github.com/dirien/gitops-promotion-tools-why-you-need-to-add-them-to-your-gitops-toolkit-in-2025",
-  "drySha": "f451fb65a58c933cbd42e03734aa44b69dae098d",
+  "drySha": "77c3e4adc55a7db5ddbd6b6c0afa199609b840c7",
   "author": "Engin Diri <engin.diri@ediri.de>",
-  "date": "2025-09-15T09:26:56Z",
-  "subject": "Reintroduce PODTATO_PART_NUMBER environment variable in values.yaml"
+  "date": "2025-10-07T11:02:12Z",
+  "subject": "Update ArgoCD targetRevision to 8.5.9 in argocd-app.yaml"
 }
