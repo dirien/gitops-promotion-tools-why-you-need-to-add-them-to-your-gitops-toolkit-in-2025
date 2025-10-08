@@ -1,7 +1,7 @@
 {
   "repoURL": "https://github.com/dirien/gitops-promotion-tools-why-you-need-to-add-them-to-your-gitops-toolkit-in-2025",
-  "drySha": "b5c739e7569e14b80606f22883ce27551de9c56c",
+  "drySha": "1c75459e0316f0f2268739a87005e7f4ec6f9945",
   "author": "Engin Diri <engin.diri@ediri.de>",
-  "date": "2025-10-07T11:34:46Z",
-  "subject": "Update PODTATO_PART_NUMBER environment variable in values.yaml"
+  "date": "2025-10-08T13:53:56Z",
+  "subject": "Remove PODTATO_PART_NUMBER environment variable from values.yaml"
 }
