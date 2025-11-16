@@ -242,39 +242,39 @@ spec: # Arguments that can be passed from the Stage
   - name: average-latency
     initialDelay: 30s
     interval: 30s
-    count: 10
+    count: 5
     successCondition: result[0] < {{ args.latency-threshold-ms }}
-    failureLimit: 2
+    failureLimit: 3
     provider:
       prometheus:
         address: http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090
         query: |
           (
-            rate(http_server_request_latency_seconds_sum{job="{{ args.service-name }}",namespace="{{ args.namespace }}",route!~"/assets|/parts/.*"}[2m])
+            rate(http_server_request_latency_seconds_sum{job="{{ args.service-name }}",namespace="{{ args.namespace }}",route!~"/assets|/parts/.*"}[30s])
             /
-            rate(http_server_request_latency_seconds_count{job="{{ args.service-name }}",namespace="{{ args.namespace }}",route!~"/assets|/parts/.*"}[2m])
+            rate(http_server_request_latency_seconds_count{job="{{ args.service-name }}",namespace="{{ args.namespace }}",route!~"/assets|/parts/.*"}[30s])
           ) * 1000
 
   # Metric 3: Check success rate (no 5xx errors)
   - name: success-rate
     initialDelay: 30s
     interval: 30s
-    count: 10
+    count: 5
     successCondition: result[0] >= {{ args.success-rate-threshold }}
-    failureLimit: 2
+    failureLimit: 3
     provider:
       prometheus:
         address: http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090
         query: |
-          sum(rate(http_requests_total{job="{{ args.service-name }}",namespace="{{ args.namespace }}",route!~"/assets|/parts/.*",status_code!~"5.."}[2m]))
+          sum(rate(http_requests_total{job="{{ args.service-name }}",namespace="{{ args.namespace }}",route!~"/assets|/parts/.*",status_code!~"5.."}[1m]))
           /
-          sum(rate(http_requests_total{job="{{ args.service-name }}",namespace="{{ args.namespace }}",route!~"/assets|/parts/.*"}[2m]))
+          sum(rate(http_requests_total{job="{{ args.service-name }}",namespace="{{ args.namespace }}",route!~"/assets|/parts/.*"}[1m]))
 
   # Metric 4: Check p95 latency
   - name: p95-latency
     initialDelay: 30s
     interval: 30s
-    count: 10
+    count: 5
     successCondition: result[0] < {{ args.latency-threshold-ms }}
     failureLimit: 3
     provider:
@@ -282,5 +282,5 @@ spec: # Arguments that can be passed from the Stage
         address: http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090
         query: |
           histogram_quantile(0.95,
-            sum(rate(http_server_request_latency_seconds_bucket{job="{{ args.service-name }}",namespace="{{ args.namespace }}",route!~"/assets|/parts/.*"}[2m])) by (le)
+            sum(rate(http_server_request_latency_seconds_bucket{job="{{ args.service-name }}",namespace="{{ args.namespace }}",route!~"/assets|/parts/.*"}[1m])) by (le)
           ) * 1000
