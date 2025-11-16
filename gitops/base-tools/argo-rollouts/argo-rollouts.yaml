@@ -17,6 +17,13 @@ spec:
     repoURL: oci://ghcr.io/argoproj/argo-helm/argo-rollouts
     targetRevision: 2.40.5
     path: .
+    helm:
+      valuesObject:
+        dashboard:
+          enabled: true
+        controller:
+          logging:
+            level: debug
   syncPolicy:
     automated:
       prune: true
