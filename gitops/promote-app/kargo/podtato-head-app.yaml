@@ -250,9 +250,9 @@ spec: # Arguments that can be passed from the Stage
         address: http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090
         query: |
           (
-            rate(http_server_request_latency_seconds_sum{job="{{ args.service-name }}",namespace="{{ args.namespace }}"}[2m])
+            rate(http_server_request_latency_seconds_sum{job="{{ args.service-name }}",namespace="{{ args.namespace }}",route!~"/assets|/parts/.*"}[2m])
             /
-            rate(http_server_request_latency_seconds_count{job="{{ args.service-name }}",namespace="{{ args.namespace }}"}[2m])
+            rate(http_server_request_latency_seconds_count{job="{{ args.service-name }}",namespace="{{ args.namespace }}",route!~"/assets|/parts/.*"}[2m])
           ) * 1000
 
   # Metric 3: Check success rate (no 5xx errors)
@@ -266,9 +266,9 @@ spec: # Arguments that can be passed from the Stage
       prometheus:
         address: http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090
         query: |
-          sum(rate(http_requests_total{job="{{ args.service-name }}",namespace="{{ args.namespace }}",status_code!~"5.."}[2m]))
+          sum(rate(http_requests_total{job="{{ args.service-name }}",namespace="{{ args.namespace }}",route!~"/assets|/parts/.*",status_code!~"5.."}[2m]))
           /
-          sum(rate(http_requests_total{job="{{ args.service-name }}",namespace="{{ args.namespace }}"}[2m]))
+          sum(rate(http_requests_total{job="{{ args.service-name }}",namespace="{{ args.namespace }}",route!~"/assets|/parts/.*"}[2m]))
 
   # Metric 4: Check p95 latency
   - name: p95-latency
@@ -282,5 +282,5 @@ spec: # Arguments that can be passed from the Stage
         address: http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090
         query: |
           histogram_quantile(0.95,
-            sum(rate(http_server_request_latency_seconds_bucket{job="{{ args.service-name }}",namespace="{{ args.namespace }}"}[2m])) by (le)
+            sum(rate(http_server_request_latency_seconds_bucket{job="{{ args.service-name }}",namespace="{{ args.namespace }}",route!~"/assets|/parts/.*"}[2m])) by (le)
           ) * 1000

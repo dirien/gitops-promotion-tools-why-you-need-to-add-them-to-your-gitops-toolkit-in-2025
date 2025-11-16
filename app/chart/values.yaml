@@ -16,8 +16,8 @@ entry:
   serviceType: LoadBalancer
   servicePort: 9000
   env: #[]
-  - name: PODTATO_LATENCY_MS
-    value: "500"
+  #- name: PODTATO_LATENCY_MS
+  #  value: "500"
   #   - name: PODTATO_PART_NUMBER
   #     value: "01"
 hat:
