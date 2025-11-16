@@ -9,9 +9,9 @@ spec:
     server: https://kubernetes.default.svc
   project: infra
   source:
-    repoURL: oci://ghcr.io/prometheus-community/charts
+    repoURL: oci://ghcr.io/prometheus-community/charts/kube-prometheus-stack
     targetRevision: 79.5.0
-    chart: kube-prometheus-stack
+    path: .
     helm:
       valuesObject:
         prometheus:

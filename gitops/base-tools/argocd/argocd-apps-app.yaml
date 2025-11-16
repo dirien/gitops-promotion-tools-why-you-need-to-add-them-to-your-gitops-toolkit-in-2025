@@ -9,9 +9,9 @@ spec:
     server: https://kubernetes.default.svc
   project: infra
   sources:
-  - repoURL: https://argoproj.github.io/argo-helm
-    chart: argocd-apps
+  - repoURL: oci://ghcr.io/argoproj/argo-helm/argocd-apps
     targetRevision: 2.0.2
+    path: .
     helm:
       valueFiles:
       - $values/gitops/base-tools/argocd-initial-objects.yaml

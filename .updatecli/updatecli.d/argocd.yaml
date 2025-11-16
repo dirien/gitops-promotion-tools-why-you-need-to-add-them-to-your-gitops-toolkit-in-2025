@@ -3,17 +3,17 @@ name: Update ArgoCD Helm Charts
 
 sources:
   argocd-chart-version:
-    name: Get latest ArgoCD Helm chart version
+    name: Get latest ArgoCD Helm chart version from OCI registry
     kind: helmchart
     spec:
-      url: https://argoproj.github.io/argo-helm
+      url: oci://ghcr.io/argoproj/argo-helm
       name: argo-cd
 
   argocd-apps-chart-version:
-    name: Get latest ArgoCD Apps Helm chart version
+    name: Get latest ArgoCD Apps Helm chart version from OCI registry
     kind: helmchart
     spec:
-      url: https://argoproj.github.io/argo-helm
+      url: oci://ghcr.io/argoproj/argo-helm
       name: argocd-apps
 
 conditions:
@@ -22,7 +22,7 @@ conditions:
     kind: helmchart
     sourceid: argocd-chart-version
     spec:
-      url: https://argoproj.github.io/argo-helm
+      url: oci://ghcr.io/argoproj/argo-helm
       name: argo-cd
 
   argocd-apps-chart-published:
@@ -30,7 +30,7 @@ conditions:
     kind: helmchart
     sourceid: argocd-apps-chart-version
     spec:
-      url: https://argoproj.github.io/argo-helm
+      url: oci://ghcr.io/argoproj/argo-helm
       name: argocd-apps
 
 targets:
