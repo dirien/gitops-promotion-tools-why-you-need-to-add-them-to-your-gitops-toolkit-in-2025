@@ -228,7 +228,7 @@ spec: # Arguments that can be passed from the Stage
   metrics: # Metric 1: Check if the service is up and being scraped
   - name: service-availability
     initialDelay: 10s
-    interval: 20s
+    interval: 30s
     count: 3
     successCondition: result[0] >= 1
     failureLimit: 2
@@ -241,7 +241,7 @@ spec: # Arguments that can be passed from the Stage
   # Metric 2: Check average request latency is below threshold
   - name: average-latency
     initialDelay: 10s
-    interval: 20s
+    interval: 30s
     count: 3
     successCondition: result[0] < {{ args.latency-threshold-ms }}
     failureLimit: 2
@@ -258,7 +258,7 @@ spec: # Arguments that can be passed from the Stage
   # Metric 3: Check success rate (no 5xx errors)
   - name: success-rate
     initialDelay: 10s
-    interval: 20s
+    interval: 30s
     count: 3
     successCondition: result[0] >= {{ args.success-rate-threshold }}
     failureLimit: 2
@@ -272,7 +272,7 @@ spec: # Arguments that can be passed from the Stage
 
   # Metric 4: Check p95 latency
   - name: p95-latency
-    initialDelay: 10s
+    initialDelay: 30s
     interval: 20s
     count: 3
     successCondition: result[0] < {{ args.latency-threshold-ms }}
