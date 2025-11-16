@@ -128,7 +128,7 @@ affinity: {}
 # ServiceMonitor configuration for Prometheus Operator
 serviceMonitor:
   # Enable ServiceMonitor creation for all services
-  enabled: false
+  enabled: true
   # Scrape interval for metrics collection
   interval: 30s
   # Path to metrics endpoint
