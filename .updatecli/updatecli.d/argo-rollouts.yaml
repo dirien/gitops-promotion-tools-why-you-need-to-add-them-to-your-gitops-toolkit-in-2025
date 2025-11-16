@@ -3,10 +3,10 @@ name: Update Argo Rollouts Helm Chart
 
 sources:
   argo-rollouts-chart-version:
-    name: Get latest Argo Rollouts Helm chart version
+    name: Get latest Argo Rollouts Helm chart version from OCI registry
     kind: helmchart
     spec:
-      url: https://argoproj.github.io/argo-helm
+      url: oci://ghcr.io/argoproj/argo-helm
       name: argo-rollouts
 
 conditions:
@@ -15,7 +15,7 @@ conditions:
     kind: helmchart
     sourceid: argo-rollouts-chart-version
     spec:
-      url: https://argoproj.github.io/argo-helm
+      url: oci://ghcr.io/argoproj/argo-helm
       name: argo-rollouts
 
 targets:
