@@ -240,9 +240,9 @@ spec: # Arguments that can be passed from the Stage
 
   # Metric 2: Check average request latency is below threshold
   - name: average-latency
-    initialDelay: 30s
-    interval: 30s
-    count: 5
+    initialDelay: 10s
+    interval: 20s
+    count: 3
     successCondition: result[0] < {{ args.latency-threshold-ms }}
     failureLimit: 2
     provider:
@@ -257,9 +257,9 @@ spec: # Arguments that can be passed from the Stage
 
   # Metric 3: Check success rate (no 5xx errors)
   - name: success-rate
-    initialDelay: 30s
-    interval: 30s
-    count: 5
+    initialDelay: 10s
+    interval: 20s
+    count: 3
     successCondition: result[0] >= {{ args.success-rate-threshold }}
     failureLimit: 2
     provider:
@@ -272,9 +272,9 @@ spec: # Arguments that can be passed from the Stage
 
   # Metric 4: Check p95 latency
   - name: p95-latency
-    initialDelay: 30s
-    interval: 30s
-    count: 5
+    initialDelay: 10s
+    interval: 20s
+    count: 3
     successCondition: result[0] < {{ args.latency-threshold-ms }}
     failureLimit: 3
     provider:

@@ -21,9 +21,6 @@ spec:
       valuesObject:
         dashboard:
           enabled: true
-        controller:
-          logging:
-            level: debug
   syncPolicy:
     automated:
       prune: true
