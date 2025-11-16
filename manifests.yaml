@@ -211,7 +211,7 @@ spec:
         - name: podtato-head-app-kargo-dev-entry
           securityContext:
             {}
-          image: "ghcr.io/dirien/podtato-head/entry:test-kargo"
+          image: "ghcr.io/dirien/podtato-head/entry:kargo"
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
@@ -276,7 +276,7 @@ spec:
         - name: podtato-head-app-kargo-dev-hat
           securityContext:
             {}
-          image: "ghcr.io/dirien/podtato-head/hat:test-kargo"
+          image: "ghcr.io/dirien/podtato-head/hat:kargo"
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
@@ -332,7 +332,7 @@ spec:
         - name: podtato-head-app-kargo-dev-left-arm
           securityContext:
             {}
-          image: "ghcr.io/dirien/podtato-head/left-arm:test-kargo"
+          image: "ghcr.io/dirien/podtato-head/left-arm:kargo"
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
@@ -388,7 +388,7 @@ spec:
         - name: podtato-head-app-kargo-dev-left-leg
           securityContext:
             {}
-          image: "ghcr.io/dirien/podtato-head/left-leg:test-kargo"
+          image: "ghcr.io/dirien/podtato-head/left-leg:kargo"
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
@@ -444,7 +444,7 @@ spec:
         - name: podtato-head-app-kargo-dev-right-arm
           securityContext:
             {}
-          image: "ghcr.io/dirien/podtato-head/right-arm:test-kargo"
+          image: "ghcr.io/dirien/podtato-head/right-arm:kargo"
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
@@ -500,7 +500,7 @@ spec:
         - name: podtato-head-app-kargo-dev-right-leg
           securityContext:
             {}
-          image: "ghcr.io/dirien/podtato-head/right-leg:test-kargo"
+          image: "ghcr.io/dirien/podtato-head/right-leg:kargo"
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
