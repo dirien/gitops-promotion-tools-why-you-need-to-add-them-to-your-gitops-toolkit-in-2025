@@ -36,6 +36,17 @@ kind: Project
 metadata:
   name: podtato-head-app
 ---
+apiVersion: kargo.akuity.io/v1alpha1
+kind: ProjectConfig
+metadata:
+  name: podtato-head-app
+  namespace: podtato-head-app
+spec:
+  promotionPolicies:
+  - stageSelector:
+      name: qs
+    autoPromotionEnabled: true
+---
 apiVersion: v1
 kind: Secret
 type: Opaque
@@ -216,9 +227,9 @@ spec: # Arguments that can be passed from the Stage
 
   metrics: # Metric 1: Check if the service is up and being scraped
   - name: service-availability
-    initialDelay: 30s
-    interval: 30s
-    count: 5
+    initialDelay: 10s
+    interval: 20s
+    count: 3
     successCondition: result[0] >= 1
     failureLimit: 2
     provider:
