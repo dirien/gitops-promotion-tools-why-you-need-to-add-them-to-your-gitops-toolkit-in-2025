@@ -1,0 +1,28 @@
+---
+name: Update Argo Rollouts Helm Chart
+
+sources:
+  argo-rollouts-chart-version:
+    name: Get latest Argo Rollouts Helm chart version
+    kind: helmchart
+    spec:
+      url: https://argoproj.github.io/argo-helm
+      name: argo-rollouts
+
+conditions:
+  argo-rollouts-chart-published:
+    name: Verify Argo Rollouts chart exists
+    kind: helmchart
+    sourceid: argo-rollouts-chart-version
+    spec:
+      url: https://argoproj.github.io/argo-helm
+      name: argo-rollouts
+
+targets:
+  argo-rollouts-application:
+    name: Update Argo Rollouts chart version
+    kind: yaml
+    sourceid: argo-rollouts-chart-version
+    spec:
+      file: gitops/base-tools/argo-rollouts/argo-rollouts.yaml
+      key: $.spec.source.targetRevision

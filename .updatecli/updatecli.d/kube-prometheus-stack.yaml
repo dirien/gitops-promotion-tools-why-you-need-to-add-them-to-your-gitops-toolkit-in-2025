@@ -1,0 +1,28 @@
+---
+name: Update Kube-Prometheus-Stack Helm Chart
+
+sources:
+  kube-prometheus-stack-chart-version:
+    name: Get latest Kube-Prometheus-Stack Helm chart version
+    kind: helmchart
+    spec:
+      url: oci://ghcr.io/prometheus-community/charts
+      name: kube-prometheus-stack
+
+conditions:
+  kube-prometheus-stack-chart-published:
+    name: Verify Kube-Prometheus-Stack chart exists
+    kind: helmchart
+    sourceid: kube-prometheus-stack-chart-version
+    spec:
+      url: oci://ghcr.io/prometheus-community/charts
+      name: kube-prometheus-stack
+
+targets:
+  kube-prometheus-stack-application:
+    name: Update Kube-Prometheus-Stack chart version
+    kind: yaml
+    sourceid: kube-prometheus-stack-chart-version
+    spec:
+      file: gitops/base-tools/kube-prometheus-stack/kube-prometheus-stack-app.yaml
+      key: $.spec.source.targetRevision

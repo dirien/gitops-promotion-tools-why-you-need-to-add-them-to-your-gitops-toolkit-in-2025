@@ -14,12 +14,12 @@ spec:
     server: https://kubernetes.default.svc
   project: infra
   source:
-    repoURL: 'https://charts.jetstack.io'
-    targetRevision: v1.18.2
+    repoURL: oci://quay.io/jetstack/charts
+    targetRevision: v1.19.1
     chart: cert-manager
     helm:
       valuesObject:
-        crds: 
+        crds:
           enabled: true
   syncPolicy:
     automated:

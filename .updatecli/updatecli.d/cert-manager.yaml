@@ -1,0 +1,28 @@
+---
+name: Update Cert-Manager Helm Chart
+
+sources:
+  cert-manager-chart-version:
+    name: Get latest Cert-Manager Helm chart version
+    kind: helmchart
+    spec:
+      url: oci://quay.io/jetstack/charts
+      name: cert-manager
+
+conditions:
+  cert-manager-chart-published:
+    name: Verify Cert-Manager chart exists
+    kind: helmchart
+    sourceid: cert-manager-chart-version
+    spec:
+      url: oci://quay.io/jetstack/charts
+      name: cert-manager
+
+targets:
+  cert-manager-application:
+    name: Update Cert-Manager chart version
+    kind: yaml
+    sourceid: cert-manager-chart-version
+    spec:
+      file: gitops/base-tools/cert-manager/cert-manager.yaml
+      key: $.spec.source.targetRevision

@@ -10,7 +10,7 @@ spec:
   project: infra
   source:
     repoURL: oci://ghcr.io/akuity/kargo-charts/kargo
-    targetRevision: 1.7.5
+    targetRevision: 1.8.3
     path: .
     helm:
       valuesObject:

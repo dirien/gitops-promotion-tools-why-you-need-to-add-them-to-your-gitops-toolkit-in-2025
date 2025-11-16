@@ -52,6 +52,10 @@ The installation can be customized by changing the following parameters via
 | `tolerations`                   | List of node taints to tolerate                                 | `[]`                         |
 | `resources`                     | Resource requests and limits                                    | `{}`                         |
 | `nodeSelector`                  | Labels for pod assignment                                       | `{}`                         |
+| `serviceMonitor.enabled`        | Enable ServiceMonitor creation for Prometheus Operator          | `false`                      |
+| `serviceMonitor.interval`       | Scrape interval for metrics collection                          | `30s`                        |
+| `serviceMonitor.path`           | Path to metrics endpoint                                        | `/metrics`                   |
+| `serviceMonitor.labels`         | Additional labels to add to ServiceMonitors                     | `{}`                         |
 
 ## Test
 

@@ -92,6 +92,41 @@ The [GitOps Bridge Pattern](https://github.com/gitops-bridge-dev/gitops-bridge) 
 
 4. **Access ArgoCD**: The GitOps engine will be available for managing applications and promotion workflows
 
+## Automated Dependency Management
+
+This repository uses **[Updatecli](https://www.updatecli.io/)** to automatically track and update Helm chart versions across all base tools and promotion tools.
+
+### What is Updatecli?
+
+Updatecli is a declarative dependency management tool that:
+- Monitors Helm chart repositories for new versions
+- Automatically creates pull requests when updates are available
+- Ensures your GitOps configurations stay up-to-date
+- Works seamlessly with GitHub Actions
+
+### Monitored Charts
+
+The following charts are automatically tracked:
+
+**Base Tools:**
+- ArgoCD, ArgoCD Apps, Argo Rollouts
+- Cert-Manager
+- Metrics Server
+
+**Promote Tools:**
+- Kargo
+
+See [`.updatecli/README.md`](.updatecli/README.md) for detailed configuration and usage instructions.
+
+### GitHub Actions Integration
+
+Updates are checked daily at 8:00 AM UTC via GitHub Actions. When new versions are found:
+1. Updatecli creates a pull request with the version bump
+2. PRs are labeled with `dependencies` and `updatecli`
+3. You can review and merge the changes
+
+You can also trigger updates manually from the Actions tab.
+
 ## Getting Started
 
 Each tool directory contains:

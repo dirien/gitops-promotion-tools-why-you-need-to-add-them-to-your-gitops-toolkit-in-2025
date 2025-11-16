@@ -1,0 +1,28 @@
+---
+name: Update Kargo Helm Chart
+
+sources:
+  kargo-chart-version:
+    name: Get latest Kargo Helm chart version from OCI registry
+    kind: helmchart
+    spec:
+      url: oci://ghcr.io/akuity/kargo-charts
+      name: kargo
+
+conditions:
+  kargo-chart-published:
+    name: Verify Kargo chart exists
+    kind: helmchart
+    sourceid: kargo-chart-version
+    spec:
+      url: oci://ghcr.io/akuity/kargo-charts
+      name: kargo
+
+targets:
+  kargo-application:
+    name: Update Kargo chart version
+    kind: yaml
+    sourceid: kargo-chart-version
+    spec:
+      file: gitops/promote-tools/kargo/kargo.yaml
+      key: $.spec.source.targetRevision

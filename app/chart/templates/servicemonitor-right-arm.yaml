@@ -1,0 +1,24 @@
+{{- if .Values.serviceMonitor.enabled -}}
+{{ $componentName := "right-arm" }}
+{{ $servicePort := .Values.rightArm.servicePort }}
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ printf "%s-%s" (include "podtato-head.fullname" .) $componentName }}
+  labels:
+    {{- include "podtato-head.labels" . | nindent 4 }}
+    app.kubernetes.io/component: {{ printf "%s-%s" (include "podtato-head.fullname" .) $componentName }}
+    {{- with .Values.serviceMonitor.labels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "podtato-head.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: {{ printf "%s-%s" (include "podtato-head.fullname" .) $componentName }}
+  endpoints:
+  - port: http
+    path: {{ .Values.serviceMonitor.path }}
+    interval: {{ .Values.serviceMonitor.interval }}
+{{- end }}

@@ -1,5 +1,5 @@
 applications:
-  app-of-apps-pe-team:
+  app-of-apps-base-tools:
     namespace: argocd
     finalizers:
     - resources-finalizer.argocd.argoproj.io
@@ -21,6 +21,7 @@ applications:
     syncOptions:
     - CreateNamespace=true
     - ServerSideApply=true
+
   app-of-apps-promote-tools:
     namespace: argocd
     finalizers:

@@ -1,0 +1,51 @@
+---
+name: Update ArgoCD Helm Charts
+
+sources:
+  argocd-chart-version:
+    name: Get latest ArgoCD Helm chart version
+    kind: helmchart
+    spec:
+      url: https://argoproj.github.io/argo-helm
+      name: argo-cd
+
+  argocd-apps-chart-version:
+    name: Get latest ArgoCD Apps Helm chart version
+    kind: helmchart
+    spec:
+      url: https://argoproj.github.io/argo-helm
+      name: argocd-apps
+
+conditions:
+  argocd-chart-published:
+    name: Verify ArgoCD chart exists
+    kind: helmchart
+    sourceid: argocd-chart-version
+    spec:
+      url: https://argoproj.github.io/argo-helm
+      name: argo-cd
+
+  argocd-apps-chart-published:
+    name: Verify ArgoCD Apps chart exists
+    kind: helmchart
+    sourceid: argocd-apps-chart-version
+    spec:
+      url: https://argoproj.github.io/argo-helm
+      name: argocd-apps
+
+targets:
+  argocd-application:
+    name: Update ArgoCD chart version in argocd-app.yaml
+    kind: yaml
+    sourceid: argocd-chart-version
+    spec:
+      file: gitops/base-tools/argocd/argocd-app.yaml
+      key: $.spec.sources[0].targetRevision
+
+  argocd-apps-application:
+    name: Update ArgoCD Apps chart version in argocd-apps-app.yaml
+    kind: yaml
+    sourceid: argocd-apps-chart-version
+    spec:
+      file: gitops/base-tools/argocd/argocd-apps-app.yaml
+      key: $.spec.sources[0].targetRevision

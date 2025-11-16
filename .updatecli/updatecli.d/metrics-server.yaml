@@ -1,0 +1,28 @@
+---
+name: Update Metrics Server Helm Chart
+
+sources:
+  metrics-server-chart-version:
+    name: Get latest Metrics Server Helm chart version
+    kind: helmchart
+    spec:
+      url: https://kubernetes-sigs.github.io/metrics-server/
+      name: metrics-server
+
+conditions:
+  metrics-server-chart-published:
+    name: Verify Metrics Server chart exists
+    kind: helmchart
+    sourceid: metrics-server-chart-version
+    spec:
+      url: https://kubernetes-sigs.github.io/metrics-server/
+      name: metrics-server
+
+targets:
+  metrics-server-application:
+    name: Update Metrics Server chart version
+    kind: yaml
+    sourceid: metrics-server-chart-version
+    spec:
+      file: gitops/base-tools/metrics-server/metrics-server-app.yaml
+      key: $.spec.source.targetRevision

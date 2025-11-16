@@ -1,0 +1,51 @@
+name: Updatecli - Dependency Updates
+
+on:
+  schedule:
+    # Run every day at 8:00 AM UTC
+    - cron: '0 8 * * *'
+  workflow_dispatch: # Allow manual triggers
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  updatecli:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install Updatecli
+        uses: updatecli/updatecli-action@v2
+
+      - name: Run Updatecli
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_ACTOR: ${{ github.actor }}
+          GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
+          GITHUB_REPOSITORY_NAME: ${{ github.event.repository.name }}
+        run: |
+          updatecli apply --config .updatecli/updatecli.d/
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "## Updatecli Execution Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Updatecli has checked for updates to the following charts:" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Base Tools" >> $GITHUB_STEP_SUMMARY
+          echo "- ArgoCD" >> $GITHUB_STEP_SUMMARY
+          echo "- ArgoCD Apps" >> $GITHUB_STEP_SUMMARY
+          echo "- Argo Rollouts" >> $GITHUB_STEP_SUMMARY
+          echo "- Cert-Manager" >> $GITHUB_STEP_SUMMARY
+          echo "- Metrics Server" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Promote Tools" >> $GITHUB_STEP_SUMMARY
+          echo "- Kargo" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Check the [Pull Requests](https://github.com/${{ github.repository }}/pulls?q=is%3Apr+is%3Aopen+label%3Aupdatecli) for any updates." >> $GITHUB_STEP_SUMMARY

@@ -1,22 +1,22 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: argo-rollouts
+  name: kube-prometheus-stack
   namespace: argocd
 spec:
-  ignoreDifferences:
-  - group: apiextensions.k8s.io
-    kind: CustomResourceDefinition
-    jsonPointers:
-    - /spec/preserveUnknownFields
   destination:
-    namespace: argo-rollouts
+    namespace: monitoring
     server: https://kubernetes.default.svc
   project: infra
   source:
-    repoURL: https://argoproj.github.io/argo-helm
-    targetRevision: 2.40.5
-    chart: argo-rollouts
+    repoURL: oci://ghcr.io/prometheus-community/charts
+    targetRevision: 79.5.0
+    chart: kube-prometheus-stack
+    helm:
+      valuesObject:
+        prometheus:
+          prometheusSpec:
+            serviceMonitorSelectorNilUsesHelmValues: false
   syncPolicy:
     automated:
       prune: true

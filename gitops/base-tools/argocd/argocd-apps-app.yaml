@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: argo-cd
+  name: argocd-apps
   namespace: argocd
 spec:
   destination:
@@ -10,11 +10,11 @@ spec:
   project: infra
   sources:
   - repoURL: https://argoproj.github.io/argo-helm
-    targetRevision: 9.1.3
-    chart: argo-cd
+    chart: argocd-apps
+    targetRevision: 2.0.2
     helm:
       valueFiles:
-      - $values/gitops/base-tools/argocd/argocd-values.yaml
+      - $values/gitops/base-tools/argocd-initial-objects.yaml
   - repoURL: https://github.com/dirien/gitops-promotion-tools-why-you-need-to-add-them-to-your-gitops-toolkit-in-2025
     targetRevision: main
     ref: values

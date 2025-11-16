@@ -4,7 +4,7 @@ fullnameOverride: ""
 # applies to all deployments in this chart
 replicaCount: 1
 images:
-  repositoryDirname: ghcr.io/podtato-head
+  repositoryDirname: ghcr.io/dirien/podtato-head
   pullPolicy: IfNotPresent
   pullSecrets: []
     # - name: ghcr
@@ -12,7 +12,7 @@ images:
 # keep ports in sync with podtato-services/main/pkg/provider.go
 entry:
   repositoryBasename: entry
-  tag: "latest"
+  tag: "kargo"
   serviceType: LoadBalancer
   servicePort: 9000
   env: []
@@ -20,15 +20,15 @@ entry:
   #     value: "01"
 hat:
   repositoryBasename: hat
-  tag: "latest"
+  tag: "kargo"
   serviceType: ClusterIP
   servicePort: 9001
-  env:
-   - name: PODTATO_PART_NUMBER
-     value: "02"
+  env: []
+  #   - name: PODTATO_PART_NUMBER
+  #     value: "01"
 leftLeg:
   repositoryBasename: left-leg
-  tag: "latest"
+  tag: "kargo"
   serviceType: ClusterIP
   servicePort: 9002
   env: []
@@ -36,15 +36,15 @@ leftLeg:
   #     value: "01"
 leftArm:
   repositoryBasename: left-arm
-  tag: "latest"
+  tag: "kargo"
   serviceType: ClusterIP
   servicePort: 9003
   env: []
-   #  - name: PODTATO_PART_NUMBER
-   #    value: "04"
+  #   - name: PODTATO_PART_NUMBER
+  #     value: "01"
 rightLeg:
   repositoryBasename: right-leg
-  tag: "latest"
+  tag: "kargo"
   serviceType: ClusterIP
   servicePort: 9004
   env: []
@@ -52,7 +52,7 @@ rightLeg:
   #     value: "01"
 rightArm:
   repositoryBasename: right-arm
-  tag: "latest"
+  tag: "kargo"
   serviceType: ClusterIP
   servicePort: 9005
   env: []
@@ -92,7 +92,7 @@ ingress:
   hosts:
     - host: chart-example.local
       #paths: []
-      paths: 
+      paths:
         - path: /
           pathType: ImplementationSpecific
   tls: []
@@ -124,3 +124,14 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+# ServiceMonitor configuration for Prometheus Operator
+serviceMonitor:
+  # Enable ServiceMonitor creation for all services
+  enabled: false
+  # Scrape interval for metrics collection
+  interval: 30s
+  # Path to metrics endpoint
+  path: /metrics
+  # Additional labels to add to ServiceMonitors
+  labels: {}
