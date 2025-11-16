@@ -5,7 +5,7 @@ fullnameOverride: ""
 replicaCount: 1
 images:
   repositoryDirname: ghcr.io/dirien/podtato-head
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
   pullSecrets: []
     # - name: ghcr
 
