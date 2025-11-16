@@ -212,7 +212,7 @@ spec:
           securityContext:
             {}
           image: "ghcr.io/dirien/podtato-head/entry:kargo"
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - name: http
               containerPort: 9000
@@ -277,7 +277,7 @@ spec:
           securityContext:
             {}
           image: "ghcr.io/dirien/podtato-head/hat:kargo"
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - name: http
               containerPort: 9000
@@ -333,7 +333,7 @@ spec:
           securityContext:
             {}
           image: "ghcr.io/dirien/podtato-head/left-arm:kargo"
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - name: http
               containerPort: 9000
@@ -389,7 +389,7 @@ spec:
           securityContext:
             {}
           image: "ghcr.io/dirien/podtato-head/left-leg:kargo"
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - name: http
               containerPort: 9000
@@ -445,7 +445,7 @@ spec:
           securityContext:
             {}
           image: "ghcr.io/dirien/podtato-head/right-arm:kargo"
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - name: http
               containerPort: 9000
@@ -501,7 +501,7 @@ spec:
           securityContext:
             {}
           image: "ghcr.io/dirien/podtato-head/right-leg:kargo"
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - name: http
               containerPort: 9000
