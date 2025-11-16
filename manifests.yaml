@@ -211,7 +211,7 @@ spec:
         - name: podtato-head-app-kargo-dev-entry
           securityContext:
             {}
-          image: "ghcr.io/podtato-head/entry:latest"
+          image: "ghcr.io/dirien/podtato-head/entry:kargo"
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
@@ -276,7 +276,7 @@ spec:
         - name: podtato-head-app-kargo-dev-hat
           securityContext:
             {}
-          image: "ghcr.io/podtato-head/hat:latest"
+          image: "ghcr.io/dirien/podtato-head/hat:kargo"
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
@@ -297,8 +297,6 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.name
-            - name: PODTATO_PART_NUMBER
-              value: "02"
 ---
 # Source: podtato-head/templates/deployment-left-arm.yaml
 apiVersion: apps/v1
@@ -334,7 +332,7 @@ spec:
         - name: podtato-head-app-kargo-dev-left-arm
           securityContext:
             {}
-          image: "ghcr.io/podtato-head/left-arm:latest"
+          image: "ghcr.io/dirien/podtato-head/left-arm:kargo"
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
@@ -390,7 +388,7 @@ spec:
         - name: podtato-head-app-kargo-dev-left-leg
           securityContext:
             {}
-          image: "ghcr.io/podtato-head/left-leg:latest"
+          image: "ghcr.io/dirien/podtato-head/left-leg:kargo"
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
@@ -446,7 +444,7 @@ spec:
         - name: podtato-head-app-kargo-dev-right-arm
           securityContext:
             {}
-          image: "ghcr.io/podtato-head/right-arm:latest"
+          image: "ghcr.io/dirien/podtato-head/right-arm:kargo"
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
@@ -502,7 +500,7 @@ spec:
         - name: podtato-head-app-kargo-dev-right-leg
           securityContext:
             {}
-          image: "ghcr.io/podtato-head/right-leg:latest"
+          image: "ghcr.io/dirien/podtato-head/right-leg:kargo"
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
@@ -523,6 +521,144 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.name
+---
+# Source: podtato-head/templates/servicemonitor-entry.yaml
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: podtato-head-app-kargo-dev-entry
+  labels:
+    helm.sh/chart: podtato-head-0.2.7
+    app.kubernetes.io/name: podtato-head
+    app.kubernetes.io/instance: podtato-head-app-kargo-dev
+    app.kubernetes.io/version: "0.2.7"
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/component: podtato-head-app-kargo-dev-entry
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: podtato-head
+      app.kubernetes.io/instance: podtato-head-app-kargo-dev
+      app.kubernetes.io/component: podtato-head-app-kargo-dev-entry
+  endpoints:
+  - port: http
+    path: /metrics
+    interval: 30s
+---
+# Source: podtato-head/templates/servicemonitor-hat.yaml
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: podtato-head-app-kargo-dev-hat
+  labels:
+    helm.sh/chart: podtato-head-0.2.7
+    app.kubernetes.io/name: podtato-head
+    app.kubernetes.io/instance: podtato-head-app-kargo-dev
+    app.kubernetes.io/version: "0.2.7"
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/component: podtato-head-app-kargo-dev-hat
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: podtato-head
+      app.kubernetes.io/instance: podtato-head-app-kargo-dev
+      app.kubernetes.io/component: podtato-head-app-kargo-dev-hat
+  endpoints:
+  - port: http
+    path: /metrics
+    interval: 30s
+---
+# Source: podtato-head/templates/servicemonitor-left-arm.yaml
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: podtato-head-app-kargo-dev-left-arm
+  labels:
+    helm.sh/chart: podtato-head-0.2.7
+    app.kubernetes.io/name: podtato-head
+    app.kubernetes.io/instance: podtato-head-app-kargo-dev
+    app.kubernetes.io/version: "0.2.7"
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/component: podtato-head-app-kargo-dev-left-arm
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: podtato-head
+      app.kubernetes.io/instance: podtato-head-app-kargo-dev
+      app.kubernetes.io/component: podtato-head-app-kargo-dev-left-arm
+  endpoints:
+  - port: http
+    path: /metrics
+    interval: 30s
+---
+# Source: podtato-head/templates/servicemonitor-left-leg.yaml
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: podtato-head-app-kargo-dev-left-leg
+  labels:
+    helm.sh/chart: podtato-head-0.2.7
+    app.kubernetes.io/name: podtato-head
+    app.kubernetes.io/instance: podtato-head-app-kargo-dev
+    app.kubernetes.io/version: "0.2.7"
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/component: podtato-head-app-kargo-dev-left-leg
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: podtato-head
+      app.kubernetes.io/instance: podtato-head-app-kargo-dev
+      app.kubernetes.io/component: podtato-head-app-kargo-dev-left-leg
+  endpoints:
+  - port: http
+    path: /metrics
+    interval: 30s
+---
+# Source: podtato-head/templates/servicemonitor-right-arm.yaml
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: podtato-head-app-kargo-dev-right-arm
+  labels:
+    helm.sh/chart: podtato-head-0.2.7
+    app.kubernetes.io/name: podtato-head
+    app.kubernetes.io/instance: podtato-head-app-kargo-dev
+    app.kubernetes.io/version: "0.2.7"
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/component: podtato-head-app-kargo-dev-right-arm
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: podtato-head
+      app.kubernetes.io/instance: podtato-head-app-kargo-dev
+      app.kubernetes.io/component: podtato-head-app-kargo-dev-right-arm
+  endpoints:
+  - port: http
+    path: /metrics
+    interval: 30s
+---
+# Source: podtato-head/templates/servicemonitor-right-leg.yaml
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: podtato-head-app-kargo-dev-right-leg
+  labels:
+    helm.sh/chart: podtato-head-0.2.7
+    app.kubernetes.io/name: podtato-head
+    app.kubernetes.io/instance: podtato-head-app-kargo-dev
+    app.kubernetes.io/version: "0.2.7"
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/component: podtato-head-app-kargo-dev-right-leg
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: podtato-head
+      app.kubernetes.io/instance: podtato-head-app-kargo-dev
+      app.kubernetes.io/component: podtato-head-app-kargo-dev-right-leg
+  endpoints:
+  - port: http
+    path: /metrics
+    interval: 30s
 ---
 # Source: podtato-head/templates/tests/test-connection.yaml
 apiVersion: v1
