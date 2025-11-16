@@ -71,6 +71,14 @@ metadata:
   annotations:
     kargo.akuity.io/color: red
 spec:
+  verification:
+    analysisTemplates:
+    - name: podtato-head-performance
+    args:
+    - name: namespace
+      value: podtato-head-app-kargo-${{ ctx.stage }}
+    - name: service-name
+      value: podtato-head-app-kargo-${{ ctx.stage }}-entry
   promotionTemplate:
     spec:
       steps:
@@ -94,6 +102,14 @@ metadata:
   annotations:
     kargo.akuity.io/color: green
 spec:
+  verification:
+    analysisTemplates:
+    - name: podtato-head-performance
+    args:
+    - name: namespace
+      value: podtato-head-app-kargo-${{ ctx.stage }}
+    - name: service-name
+      value: podtato-head-app-kargo-${{ ctx.stage }}-entry
   promotionTemplate:
     spec:
       steps:
@@ -118,6 +134,14 @@ metadata:
   annotations:
     kargo.akuity.io/color: blue
 spec:
+  verification:
+    analysisTemplates:
+    - name: podtato-head-performance
+    args:
+    - name: namespace
+      value: podtato-head-app-kargo-${{ ctx.stage }}
+    - name: service-name
+      value: podtato-head-app-kargo-${{ ctx.stage }}-entry
   promotionTemplate:
     spec:
       steps:
@@ -174,3 +198,78 @@ spec:
     config:
       path: ./out
       targetBranch: stage/${{ ctx.stage }}
+---
+apiVersion: argoproj.io/v1alpha1
+kind: AnalysisTemplate
+metadata:
+  name: podtato-head-performance
+  namespace: podtato-head-app
+spec: # Arguments that can be passed from the Stage
+  args:
+  - name: service-name
+  - name: namespace
+    value: default
+  - name: latency-threshold-ms
+    value: "100"  # Maximum acceptable latency in milliseconds
+  - name: success-rate-threshold
+    value: "0.95"  # Minimum 95% success rate
+
+  metrics: # Metric 1: Check if the service is up and being scraped
+  - name: service-availability
+    initialDelay: 30s
+    interval: 30s
+    count: 5
+    successCondition: result[0] >= 1
+    failureLimit: 2
+    provider:
+      prometheus:
+        address: http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090
+        query: |
+          up{job="{{ args.service-name }}",namespace="{{ args.namespace }}"}
+
+  # Metric 2: Check average request latency is below threshold
+  - name: average-latency
+    initialDelay: 30s
+    interval: 30s
+    count: 5
+    successCondition: result[0] < {{ args.latency-threshold-ms }}
+    failureLimit: 2
+    provider:
+      prometheus:
+        address: http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090
+        query: |
+          (
+            rate(http_server_request_latency_seconds_sum{job="{{ args.service-name }}",namespace="{{ args.namespace }}"}[2m])
+            /
+            rate(http_server_request_latency_seconds_count{job="{{ args.service-name }}",namespace="{{ args.namespace }}"}[2m])
+          ) * 1000
+
+  # Metric 3: Check success rate (no 5xx errors)
+  - name: success-rate
+    initialDelay: 30s
+    interval: 30s
+    count: 5
+    successCondition: result[0] >= {{ args.success-rate-threshold }}
+    failureLimit: 2
+    provider:
+      prometheus:
+        address: http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090
+        query: |
+          sum(rate(http_requests_total{job="{{ args.service-name }}",namespace="{{ args.namespace }}",status_code!~"5.."}[2m]))
+          /
+          sum(rate(http_requests_total{job="{{ args.service-name }}",namespace="{{ args.namespace }}"}[2m]))
+
+  # Metric 4: Check p95 latency
+  - name: p95-latency
+    initialDelay: 30s
+    interval: 30s
+    count: 5
+    successCondition: result[0] < {{ args.latency-threshold-ms }}
+    failureLimit: 3
+    provider:
+      prometheus:
+        address: http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090
+        query: |
+          histogram_quantile(0.95,
+            sum(rate(http_server_request_latency_seconds_bucket{job="{{ args.service-name }}",namespace="{{ args.namespace }}"}[2m])) by (le)
+          ) * 1000
