@@ -250,9 +250,9 @@ spec: # Arguments that can be passed from the Stage
         address: http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090
         query: |
           (
-            rate(http_server_request_latency_seconds_sum{job="{{ args.service-name }}",namespace="{{ args.namespace }}",route!~"/assets|/parts/.*"}[30s])
+            rate(http_server_request_latency_seconds_sum{job="{{ args.service-name }}",namespace="{{ args.namespace }}",route!~"/assets|/parts/.*"}[1m])
             /
-            rate(http_server_request_latency_seconds_count{job="{{ args.service-name }}",namespace="{{ args.namespace }}",route!~"/assets|/parts/.*"}[30s])
+            rate(http_server_request_latency_seconds_count{job="{{ args.service-name }}",namespace="{{ args.namespace }}",route!~"/assets|/parts/.*"}[1m])
           ) * 1000
 
   # Metric 3: Check success rate (no 5xx errors)
