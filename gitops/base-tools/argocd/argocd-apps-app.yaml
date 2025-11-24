@@ -14,7 +14,7 @@ spec:
     path: .
     helm:
       valueFiles:
-      - $values/gitops/base-tools/argocd-initial-objects.yaml
+      - $values/base-tools/argocd-initial-objects.yaml
   - repoURL: https://github.com/dirien/gitops-promotion-tools-why-you-need-to-add-them-to-your-gitops-toolkit-in-2025
     targetRevision: main
     ref: values
