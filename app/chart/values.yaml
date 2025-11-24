@@ -41,9 +41,9 @@ leftArm:
   tag: "kargo"
   serviceType: ClusterIP
   servicePort: 9003
-  env: []
-  #   - name: PODTATO_PART_NUMBER
-  #     value: "05"
+  env: #[]
+     - name: PODTATO_PART_NUMBER
+       value: "05"
 rightLeg:
   repositoryBasename: right-leg
   tag: "kargo"
