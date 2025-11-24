@@ -11,8 +11,17 @@ const argoCD = new k8s.helm.v3.Release("argo-cd", {
             enabled: false
         },
         configs: {
+            params: {
+                // Enable hydrator for source hydration pattern
+                "hydrator.enabled": "true",
+                // Reduce polling interval when using webhooks (optimization)
+                "timeout.reconciliation": "60s",
+            },
             secret: {
                 argocdServerAdminPassword: "$2a$10$5vm8wXaSdbuff0m9l21JdevzXBzJFPCi8sy6OOnpZMAG.fOXL7jvO",
+                // GitHub webhook secret for authenticating webhook requests
+                // IMPORTANT: Change this to a secure random string and configure the same in GitHub webhook
+                "webhook.github.secret": "change-me-to-a-secure-random-string",
             }
         },
         notifications: {
