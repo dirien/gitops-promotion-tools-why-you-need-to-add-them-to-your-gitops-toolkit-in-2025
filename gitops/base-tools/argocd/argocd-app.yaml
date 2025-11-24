@@ -10,7 +10,7 @@ spec:
   project: infra
   sources:
   - repoURL: oci://ghcr.io/argoproj/argo-helm/argo-cd
-    targetRevision: 9.1.3
+    targetRevision: 9.1.4
     path: .
     helm:
       valueFiles:

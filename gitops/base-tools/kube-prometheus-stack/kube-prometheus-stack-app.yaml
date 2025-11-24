@@ -10,7 +10,7 @@ spec:
   project: infra
   source:
     repoURL: oci://ghcr.io/prometheus-community/charts/kube-prometheus-stack
-    targetRevision: 79.5.0
+    targetRevision: 79.7.1
     path: .
     helm:
       valuesObject:
