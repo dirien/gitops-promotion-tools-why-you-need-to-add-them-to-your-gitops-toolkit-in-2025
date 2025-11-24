@@ -6,7 +6,7 @@ applications:
     project: infra
     source:
       repoURL: https://github.com/dirien/gitops-promotion-tools-why-you-need-to-add-them-to-your-gitops-toolkit-in-2025
-      branch: main
+      targetRevision: main
       path: gitops/base-tools
       directory:
         recurse: true
@@ -29,7 +29,7 @@ applications:
     project: infra
     source:
       repoURL: https://github.com/dirien/gitops-promotion-tools-why-you-need-to-add-them-to-your-gitops-toolkit-in-2025
-      branch: main
+      targetRevision: main
       path: gitops/promote-tools
       directory:
         recurse: true
