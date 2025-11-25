@@ -304,8 +304,6 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.name
-            - name: PODTATO_PART_NUMBER
-              value: "05"
           image: ghcr.io/dirien/podtato-head/left-arm:kargo
           imagePullPolicy: Always
           name: podtato-head-app-gitops-promoter-prod-left-arm
