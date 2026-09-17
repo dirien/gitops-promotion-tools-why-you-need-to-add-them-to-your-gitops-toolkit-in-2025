@@ -3,6 +3,11 @@ kind: Application
 metadata:
   name: argocd-apps
   namespace: argocd
+  annotations:
+    # argocd-apps renders app-of-apps-base-tools, which in turn manages this Application.
+    # With the Application health check enabled, that loop would keep both parents
+    # Degraded forever, so leave this app out of app-of-apps-base-tools' health.
+    argocd.argoproj.io/ignore-healthcheck: "true"
 spec:
   destination:
     namespace: argocd
