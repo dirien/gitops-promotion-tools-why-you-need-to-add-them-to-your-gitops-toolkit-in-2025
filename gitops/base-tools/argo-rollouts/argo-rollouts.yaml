@@ -15,7 +15,7 @@ spec:
   project: infra
   source:
     repoURL: oci://ghcr.io/argoproj/argo-helm/argo-rollouts
-    targetRevision: 2.40.5
+    targetRevision: 2.43.1
     path: .
     helm:
       valuesObject:

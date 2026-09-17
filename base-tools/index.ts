@@ -38,7 +38,7 @@ const argoCD = new k8s.helm.v3.Release("argo-cd", {
                         env: [
                             {
                                 name: "EXTENSION_URL",
-                                value: "https://github.com/argoproj-labs/rollout-extension/releases/download/v0.3.7/extension.tar"
+                                value: "https://github.com/argoproj-labs/rollout-extension/releases/download/v0.4.0/extension.tar"
                             }
                         ],
                     },

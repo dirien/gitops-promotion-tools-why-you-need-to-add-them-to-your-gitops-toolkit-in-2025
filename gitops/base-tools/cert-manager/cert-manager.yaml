@@ -15,7 +15,7 @@ spec:
   project: infra
   source:
     repoURL: oci://quay.io/jetstack/charts/cert-manager
-    targetRevision: 1.19.1
+    targetRevision: 1.21.2
     path: .
     helm:
       valuesObject:

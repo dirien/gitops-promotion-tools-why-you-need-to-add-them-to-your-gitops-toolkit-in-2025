@@ -10,7 +10,7 @@ spec:
   project: infra
   sources:
   - repoURL: oci://ghcr.io/argoproj/argo-helm/argocd-apps
-    targetRevision: 2.0.2
+    targetRevision: 2.0.5
     path: .
     helm:
       valueFiles:
