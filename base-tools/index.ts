@@ -11,6 +11,22 @@ const argoCD = new k8s.helm.v3.Release("argo-cd", {
             enabled: false
         },
         configs: {
+            cm: {
+                // Restore Application health so app-of-apps sync waves wait for child apps
+                "resource.customizations.health.argoproj.io_Application": `hs = {}
+hs.status = "Progressing"
+hs.message = ""
+if obj.status ~= nil then
+  if obj.status.health ~= nil then
+    hs.status = obj.status.health.status
+    if obj.status.health.message ~= nil then
+      hs.message = obj.status.health.message
+    end
+  end
+end
+return hs
+`,
+            },
             params: {
                 // Enable hydrator for source hydration pattern
                 "hydrator.enabled": "true",

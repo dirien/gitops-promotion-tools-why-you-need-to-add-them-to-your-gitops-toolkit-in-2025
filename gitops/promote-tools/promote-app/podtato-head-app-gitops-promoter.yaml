@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: promote-app-gitops-promoter
+  namespace: argocd
+  annotations:
+    # Wave 1: created only after the promotion tools (wave 0) report Healthy.
+    # Requires the argoproj.io/Application health check in argocd-values.yaml.
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  destination:
+    namespace: argocd
+    server: https://kubernetes.default.svc
+  project: infra
+  source:
+    repoURL: https://github.com/dirien/gitops-promotion-tools-why-you-need-to-add-them-to-your-gitops-toolkit-in-2025
+    targetRevision: main
+    path: gitops/promote-app/gitops-promoter
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - ServerSideApply=true
+    retry:
+      limit: 5
+      backoff:
+        duration: 10s
+        factor: 2
+        maxDuration: 3m
