@@ -79,6 +79,20 @@ spec:
     branch: environment/prod
   gitRepositoryRef:
     name: gitops-promoter-gitrepository
+  orderCommitStatusRef:
+    group: promoter.argoproj.io
+    kind: DependentsSuccessfulCommitStatus
+    name: gitops-promoter-promotionstrategy
+---
+apiVersion: promoter.argoproj.io/v1alpha1
+kind: DependentsSuccessfulCommitStatus
+metadata:
+  name: gitops-promoter-promotionstrategy
+  namespace: promoter-system
+spec:
+  key: dependents-successful
+  promotionStrategyRef:
+    name: gitops-promoter-promotionstrategy
 ---
 apiVersion: promoter.argoproj.io/v1alpha1
 kind: ArgoCDCommitStatus
