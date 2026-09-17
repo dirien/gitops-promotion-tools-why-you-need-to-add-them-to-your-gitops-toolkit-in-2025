@@ -48,6 +48,7 @@ return hs
                 type: "LoadBalancer",
             },
             extensions: {
+                enabled: true,
                 extensionList: [
                     {
                         name: "rollout-extension",

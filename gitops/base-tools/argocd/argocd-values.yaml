@@ -15,6 +15,17 @@ configs:
         end
       end
       return hs
+    # GitOps Promoter: Pull Request deep links and commit status keys in the resource tree
+    resource.links: |
+      - url: '{{.resource.status.url}}'
+        title: Pull Request
+        icon.class: fa-code-pull-request
+        if: resource.apiVersion == "promoter.argoproj.io/v1alpha1" && resource.kind == "PullRequest" && resource.status.url != nil && resource.status.url != ""
+      - url: '{{.resource.status.pullRequest.url}}'
+        title: Pull Request
+        icon.class: fa-code-pull-request
+        if: resource.apiVersion == "promoter.argoproj.io/v1alpha1" && resource.kind == "ChangeTransferPolicy" && resource.status.pullRequest != nil && resource.status.pullRequest.url != nil && resource.status.pullRequest.url != ""
+    resource.customLabels: promoter.argoproj.io/commit-status
   params:
     "hydrator.enabled": true
     # Reduce polling interval when using webhooks (optimization)
@@ -42,8 +53,18 @@ server:
   service:
     type: LoadBalancer
   extensions:
+    enabled: true
     extensionList:
     - name: rollout-extension
       env:
       - name: EXTENSION_URL
         value: https://github.com/argoproj-labs/rollout-extension/releases/download/v0.4.0/extension.tar
+    # GitOps Promoter UI extension (https://gitops-promoter.readthedocs.io/en/latest/integrating-with-argocd/)
+    - name: extension-gitops-promoter
+      env:
+      - name: EXTENSION_NAME
+        value: gitops-promoter
+      - name: EXTENSION_URL
+        value: https://github.com/argoproj-labs/gitops-promoter/releases/download/v0.39.0/gitops-promoter-argocd-extension.tar.gz
+      - name: EXTENSION_CHECKSUM_URL
+        value: https://github.com/argoproj-labs/gitops-promoter/releases/download/v0.39.0/gitops-promoter_0.39.0_checksums.txt
