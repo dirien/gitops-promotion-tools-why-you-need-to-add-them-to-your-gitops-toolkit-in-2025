@@ -47,5 +47,6 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### Promote Tools" >> $GITHUB_STEP_SUMMARY
           echo "- Kargo" >> $GITHUB_STEP_SUMMARY
+          echo "- GitOps Promoter" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "Check the [Pull Requests](https://github.com/${{ github.repository }}/pulls?q=is%3Apr+is%3Aopen+label%3Aupdatecli) for any updates." >> $GITHUB_STEP_SUMMARY

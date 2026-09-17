@@ -1,0 +1,28 @@
+---
+name: Update GitOps Promoter Helm Chart
+
+sources:
+  gitops-promoter-chart-version:
+    name: Get latest GitOps Promoter Helm chart version
+    kind: helmchart
+    spec:
+      url: https://argoproj-labs.github.io/gitops-promoter-helm/
+      name: gitops-promoter
+
+conditions:
+  gitops-promoter-chart-published:
+    name: Verify GitOps Promoter chart exists
+    kind: helmchart
+    sourceid: gitops-promoter-chart-version
+    spec:
+      url: https://argoproj-labs.github.io/gitops-promoter-helm/
+      name: gitops-promoter
+
+targets:
+  gitops-promoter-application:
+    name: Update GitOps Promoter chart version
+    kind: yaml
+    sourceid: gitops-promoter-chart-version
+    spec:
+      file: gitops/promote-tools/gitops-promoter/gitops-promoter.yaml
+      key: $.spec.source.targetRevision

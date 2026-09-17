@@ -50,7 +50,7 @@ case "$ACTION" in
         fi
         ;;
     *)
-        echo "Usage: $0 [diff|apply] [all|argocd|kargo|cert-manager|metrics-server|argo-rollouts]"
+        echo "Usage: $0 [diff|apply] [all|argocd|kargo|gitops-promoter|cert-manager|metrics-server|argo-rollouts|kube-prometheus-stack]"
         exit 1
         ;;
 esac

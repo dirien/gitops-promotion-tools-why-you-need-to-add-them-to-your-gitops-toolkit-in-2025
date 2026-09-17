@@ -12,17 +12,19 @@ Updatecli is a declarative update automation tool that helps keep dependencies u
 
 | Tool | Current Version | Helm Repository | Manifest |
 |------|----------------|-----------------|----------|
-| ArgoCD | 8.5.9 | https://argoproj.github.io/argo-helm | `argocd.yaml` |
-| ArgoCD Apps | 2.0.2 | https://argoproj.github.io/argo-helm | `argocd.yaml` |
-| Argo Rollouts | 2.40.4 | https://argoproj.github.io/argo-helm | `argo-rollouts.yaml` |
-| Cert-Manager | v1.18.2 | https://charts.jetstack.io | `cert-manager.yaml` |
-| Metrics Server | 3.13.0 | https://kubernetes-sigs.github.io/metrics-server/ | `metrics-server.yaml` |
+| ArgoCD | 10.9.1 | oci://ghcr.io/argoproj/argo-helm | `argocd.yaml` |
+| ArgoCD Apps | 2.0.5 | oci://ghcr.io/argoproj/argo-helm | `argocd.yaml` |
+| Argo Rollouts | 2.43.1 | oci://ghcr.io/argoproj/argo-helm | `argo-rollouts.yaml` |
+| Cert-Manager | 1.21.2 | oci://quay.io/jetstack/charts | `cert-manager.yaml` |
+| Kube Prometheus Stack | 91.4.1 | oci://ghcr.io/prometheus-community/charts | `kube-prometheus-stack.yaml` |
+| Metrics Server | 3.14.0 | https://kubernetes-sigs.github.io/metrics-server/ | `metrics-server.yaml` |
 
 ### Promote Tools (`gitops/promote-tools/`)
 
 | Tool | Current Version | Registry | Manifest |
 |------|----------------|----------|----------|
-| Kargo | 1.7.5 | oci://ghcr.io/akuity/kargo-charts | `kargo.yaml` |
+| Kargo | 1.11.4 | oci://ghcr.io/akuity/kargo-charts | `kargo.yaml` |
+| GitOps Promoter | 0.18.0 | https://argoproj-labs.github.io/gitops-promoter-helm/ | `gitops-promoter.yaml` |
 
 ## Configuration Structure
 

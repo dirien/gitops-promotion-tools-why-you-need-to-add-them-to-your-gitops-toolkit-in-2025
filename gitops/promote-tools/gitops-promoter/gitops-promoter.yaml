@@ -9,14 +9,37 @@ spec:
     server: https://kubernetes.default.svc
   project: infra
   source:
-    repoURL: https://github.com/dirien/gitops-promotion-tools-why-you-need-to-add-them-to-your-gitops-toolkit-in-2025
-    targetRevision: main
-    path: gitops/promote-tools/gitops-promoter/yaml
-    directory:
-      recurse: true
+    repoURL: https://argoproj-labs.github.io/gitops-promoter-helm/
+    chart: gitops-promoter
+    targetRevision: 0.18.0
+    helm:
+      valuesObject:
+        rbac:
+          helpers:
+            enable: true
+        controllerConfiguration:
+          promotionStrategy:
+            workQueue:
+              requeueDuration: 30s
+          changeTransferPolicy:
+            workQueue:
+              requeueDuration: 30s
+          pullRequest:
+            workQueue:
+              requeueDuration: 30s
+          commitStatus:
+            workQueue:
+              requeueDuration: 30s
+          argocdCommitStatus:
+            workQueue:
+              requeueDuration: 30s
+          timedCommitStatus:
+            workQueue:
+              requeueDuration: 30s
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
     syncOptions:
+    - CreateNamespace=true
     - ServerSideApply=true
